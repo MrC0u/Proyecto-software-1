@@ -1,0 +1,35 @@
+version: '3.7'
+services:
+
+  server:
+    container_name: api
+    build: ./api
+    depends_on:
+    - postgres
+    - client
+    ports:
+      - "4000:4000"
+    volumes:
+      - "./api/src:/app/src"
+
+  client:
+    container_name: react
+    build: ./react
+    depends_on:
+      - postgres
+    ports:
+      - "3000:3000"
+    volumes:
+      - "./react/src:/app/src"
+
+  postgres:
+    image: docker.io/bitnami/postgresql:14
+    volumes:
+      - ./Database/db/:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      - POSTGRESQL_USERNAME=postgres
+      - POSTGRESQL_PASSWORD=postgres
+      - ALLOW_EMPTY_PASSWORD=yes
+      - POSTGRESQL_DATABASE=botilleria
+    ports:
+      - "5432:5432"
