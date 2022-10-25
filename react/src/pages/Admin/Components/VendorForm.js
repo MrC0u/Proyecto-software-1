@@ -31,7 +31,7 @@ export default function VendorForm() {
       headers: {"Content-Type": "application/json" },
     });
     const data = await res.json();
-    
+    console.log(data)
     setLoading(false);
     navigate('/admin/listVendedores');
   };

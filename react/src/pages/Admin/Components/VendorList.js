@@ -19,6 +19,7 @@ export default function VendorList() {
     const res = await fetch(`http://192.168.100.19:4000/delete/${id}`,{
       method: "DELETE",
     })
+    console.log(res)
 
     setVendedores(vendedores.filter((vendedor) => vendedor.id !== id));
   }

@@ -18,6 +18,9 @@ export default function Navbar({idUser}) {
                 <Link to='' style={{textDecoration:'none', color:'#eee'}}> Inicio </Link>
               </Typography>
               <Stack direction="row" spacing={2}>
+                <Button variant='contained' color='warning' onClick={() => navigate(`/vendedor/${idUser}/inventario`)}>
+                    Inventario
+                </Button>
                 <Button variant='contained' color='warning' onClick={() => navigate(`/vendedor/${idUser}/cambioClave`)}>
                     Cambio Clave
                 </Button>
