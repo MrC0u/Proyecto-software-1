@@ -13,7 +13,7 @@ export const InventAdmin = () => {
 
   const loadProductos = async () => {
 
-    const response = await fetch(`http://${process.env.REACT_APP_IP}:4000/Productos`);
+    const response = await fetch(`http://${process.env.REACT_APP_IP}:4000/productos`);
     const data = await response.json();
     console.log(data);
     setInv(data);

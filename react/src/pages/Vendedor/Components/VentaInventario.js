@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect ,useState} from 'react';
 import {TextField, Autocomplete} from '@mui/material'
 import {useNavigate} from 'react-router-dom';
 
@@ -53,9 +53,14 @@ const inventario = [
     },
 ]
 
+function onlyUnique(value, index, self) {
+    return self.indexOf(value) === index;
+  }
+
 export const VentaInventario = () => {
 
     const [productos, setProductos] = useState([]);
+    const [categorias, setCategorias] = useState([]);
 
     //BASE DE DATOS FICTICIA
     const inv= inventario;
@@ -63,11 +68,16 @@ export const VentaInventario = () => {
     const navigate = useNavigate();
 
     const loadProducts = async () => {
-        const response = await fetch(`http://${process.env.REACT_APP_IP}:4000/products`);
+        const response = await fetch(`http://${process.env.REACT_APP_IP}:4000/productos`);
         const data = await response.json();
         console.log(data);
-        // setVendedores(data);
+        setProductos(data);
       }
+
+
+      useEffect( () => {
+        loadProducts();
+      }, [])
 
     return(
 
@@ -75,19 +85,10 @@ export const VentaInventario = () => {
             
             <label>
             <Autocomplete
-                // sx={{
-                // display: 'inline-block',
-                // '& input': {
-                //     width: 500,
-                //     bgcolor: 'background.paper',
-                //     color: (theme) =>
-                //     theme.palette.getContrastText(theme.palette.background.paper),
-                // },
-                // }}
                 freeSolo
                 id="search-input"
                 disableClearable
-                options={inventario.map(object => object.nombre )}
+                options={productos.map(object => object.categoria ).filter(onlyUnique)}
                 sx={{ width: 300 }}
                 renderInput={(params) => (
                     <TextField

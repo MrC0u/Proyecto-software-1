@@ -121,6 +121,15 @@ const getProductos = async (req, res) => {
 
 }
 
+const getCategorias = async (req, res) => {
+    
+
+    const result = await pool.query('SELECT DISTINCT categoria FROM inventario')
+    console.log(result.rows)
+    res.json(result.rows)
+
+}
+
 const addImages = async (req,res) => {
     console.log(req.body)
 }
@@ -135,5 +144,6 @@ module.exports = {
     cambioClave,
     createProducto,
     getProductos,
+    getCategorias,
     addImages
 }

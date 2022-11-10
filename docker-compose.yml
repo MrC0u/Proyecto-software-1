@@ -22,9 +22,6 @@ services:
       - "3000:3000"
     volumes:
       - "./react/src:/app/src"
-    links:
-      - postgres
-      - api
 
   postgres:
     image: docker.io/bitnami/postgresql:14

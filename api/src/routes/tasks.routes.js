@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { getVendedores, create, deleteVendedor, login, userLevel, getId, cambioClave, createProducto, getProductos, addImages } = require('../controllers/tasks.controller');
+const { getVendedores, create, deleteVendedor, login, userLevel, getId, cambioClave, createProducto, getProductos, getCategorias, addImages } = require('../controllers/tasks.controller');
 
 const router = Router();
 
@@ -27,7 +27,9 @@ router.put('/cambioClave/:id', cambioClave);
 
 router.post('/createProducto',createProducto);
 
-router.get('/Productos',getProductos);
+router.get('/productos',getProductos);
+
+router.get('/categorias',getCategorias);
 
 router.post('/images/post',addImages)
 
