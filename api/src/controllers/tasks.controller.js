@@ -9,7 +9,7 @@ const getVendedores = async (req, res) => {
 }
 
 const login = async (req, res) => {
-
+    console.log('a')
     const {user} = req.params;
     
     const result = await pool.query('SELECT clave FROM empleados WHERE usuario = $1', [user]);
@@ -114,6 +114,7 @@ const createProducto = async (req, res, next) =>{
 
 const getProductos = async (req, res) => {
     
+
     const result = await pool.query('SELECT * FROM inventario')
     console.log(result.rows)
     res.json(result.rows)

@@ -9,14 +9,14 @@ export default function VendorList() {
   const [vendedores, setVendedores] = useState([]);
 
   const loadVendedores = async () => {
-    const response = await fetch('http://localhost:4000/vendedores');
+    const response = await fetch(`http://${process.env.REACT_APP_IP}:4000/vendedores`);
     const data = await response.json();
     console.log(data);
     setVendedores(data);
   }
 
   const handleDelete = async (id) => {
-    const res = await fetch(`http://192.168.100.19:4000/delete/${id}`,{
+    const res = await fetch(`http://${process.env.REACT_APP_IP}:4000/delete/${id}`,{
       method: "DELETE",
     })
     console.log(res)

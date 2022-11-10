@@ -8,7 +8,7 @@ const app = express();
 
 app.use(express.json());
 
-//app.use(cors());
+app.use(cors());
 app.use(taskRoutes)
 
 app.use((err, req, res, next) => {

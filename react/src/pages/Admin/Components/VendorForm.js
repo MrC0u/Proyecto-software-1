@@ -25,7 +25,7 @@ export default function VendorForm() {
 
     setLoading(true);
 
-    const res = await fetch('http://localhost:4000/create', {
+    const res = await fetch(`http://${process.env.REACT_APP_IP}:4000/create`, {
       method: 'POST',
       body: JSON.stringify(vendedor),
       headers: {"Content-Type": "application/json" },

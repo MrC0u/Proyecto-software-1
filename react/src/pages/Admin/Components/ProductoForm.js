@@ -38,7 +38,7 @@ export const ProductoForm = () => {
     formdata.append('image',file)
     formdata.append('nombre',producto.nombre)
     console.log(formdata)
-    fetch('http://localhost:4000/images/post',{
+    fetch('http://api:4000/images/post',{
       method: 'POST',
       body: formdata,
       headers: {
@@ -66,7 +66,7 @@ export const ProductoForm = () => {
     
     
     setLoading(true);
-    const res = await fetch('http://localhost:4000/createProducto',{
+    const res = await fetch(`http://${process.env.REACT_APP_IP}:4000/createProducto`,{
         method:'POST',
         body: JSON.stringify(producto),
         headers: {"Content-Type": "application/json" },

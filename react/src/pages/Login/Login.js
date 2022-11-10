@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 
+
 import {
     Button,
     TextField,
@@ -30,14 +31,14 @@ export const Login = () => {
 
         try {
 
-            const response = await fetch(`http://localhost:4000/login/${datos.usuario}`, {
+            const response = await fetch(`http://${process.env.REACT_APP_IP}:4000/login/${datos.usuario}`, {
                 method: 'GET',
             });
             const data = await response.json();
 
             if (datos.clave === data[0].clave) {
 
-                const response = await fetch(`http://localhost:4000/userLevel/${datos.usuario}`, {
+                const response = await fetch(`http://${process.env.REACT_APP_IP}:4000/userLevel/${datos.usuario}`, {
                     method: 'GET',
                 });
                 const data = await response.json();
@@ -47,7 +48,7 @@ export const Login = () => {
                 } else {
 
 
-                    const response = await fetch(`http://localhost:4000/getId/${datos.usuario}`, {
+                    const response = await fetch(`http://${process.env.REACT_APP_IP}:4000/getId/${datos.usuario}`, {
                         method: 'GET',
                     });
                     const data = await response.json();

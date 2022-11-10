@@ -22,7 +22,7 @@ export const CambioClave = ({idUser}) => {
     
         setLoading(true);
     
-        const res = await fetch(`http://localhost:4000/cambioClave/${idUser}`, {
+        const res = await fetch(`http://api:4000/cambioClave/${idUser}`, {
           method: 'PUT',
           headers: {"Content-Type": "application/json" },
           body: JSON.stringify(clave),
