@@ -16,6 +16,9 @@ export default function Navbar() {
                 <Link to='' style={{textDecoration:'none', color:'#eee'}}> Inicio </Link>
               </Typography>
               <Stack direction="row" spacing={2}>
+                <Button variant='contained' color='primary' onClick={() => navigate(`inventario`)}>
+                    Inventario
+                </Button>
                 <Button variant='contained' color='primary' onClick={() => navigate('listVendedores')}>
                   Vendedores
                 </Button>

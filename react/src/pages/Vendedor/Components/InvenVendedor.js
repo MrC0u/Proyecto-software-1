@@ -1,5 +1,8 @@
 import React from 'react';
-import {Card,CardContent,CardMedia,Typography,CardActionArea} from '@mui/material'
+import {Grid,Card,CardContent,CardMedia,Typography,CardActionArea,Stack,Button} from '@mui/material'
+import {useNavigate} from 'react-router-dom';
+
+
 const inventario = [
     {
         Id:'1',
@@ -52,17 +55,33 @@ const inventario = [
 ]
 
 export const InventVendedor = () => {
+    //BASE DE DATOS FICTICIA
     const inv= inventario;
+
+    const navigate = useNavigate();
     return(
         <div>
-            {
-                inv.map( data => (
+            <Stack direction="row" sx={{
+                my: 5
+            }}>
+                <Typography sx={{ flexGrow: 1}}>
+                    <h1>Inventario</h1>
+                </Typography>
+                <Button variant='contained' color='success'  onClick={() => navigate('/admin/addVendedores')}>
+                    Agregar
+                </Button>
+            </Stack>
+            
+                    
+                    <Grid>
                     <Card sx={{ maxWidth: 345}}>
+                    {
+                inv.map( data => (
                         <CardActionArea>
                             <CardMedia 
                             component="img"
                             height="140"
-                            image = {`Images/${data.imagen}.jpg`}
+                            image = "https://www.smashbros.com/wiiu-3ds/images/character/link/main.png"
                             alt={data.imagen}
                             />
 
@@ -97,10 +116,12 @@ export const InventVendedor = () => {
                             </CardContent>
                         </CardActionArea>
 
-                        
-                    </Card>
-                ) )
+                        ) )
             }
+                    </Card>
+                    </Grid>
+                    
+                
         </div>
     )
 }

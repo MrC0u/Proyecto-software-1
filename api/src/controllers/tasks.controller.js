@@ -89,6 +89,41 @@ const create = async (req, res, next) => {
     }
 }
 
+const createProducto = async (req, res, next) =>{
+    const {nombre, precioVenta, categoria, distribuidor, stock, precioCompra, detalle} = req.body
+    const precioVenta1 = parseInt(precioVenta)
+    const stock1 = parseInt(stock)
+    const precioCompra1 = parseInt(precioCompra)
+    try {
+        const result = await pool.query("INSERT INTO inventario (id, nombre, precioVenta, categoria, distribuidor, stock, precioCompra, detalle) VALUES (default , $1, $2, $3, $4, $5, $6, $7)",[
+            nombre[0],
+            precioVenta1, 
+            categoria[0], 
+            distribuidor[0], 
+            stock1, 
+            precioCompra1,
+            detalle[0]
+        ])
+        console.log(result);
+        res.json(result.rows);
+
+    } catch (error) {
+        next(error)
+    }
+}
+
+const getProductos = async (req, res) => {
+    
+    const result = await pool.query('SELECT * FROM inventario')
+    console.log(result.rows)
+    res.json(result.rows)
+
+}
+
+const addImages = async (req,res) => {
+    console.log(req.body)
+}
+
 module.exports = {
     getVendedores,
     create,
@@ -96,5 +131,8 @@ module.exports = {
     login,
     userLevel,
     getId,
-    cambioClave
+    cambioClave,
+    createProducto,
+    getProductos,
+    addImages
 }
