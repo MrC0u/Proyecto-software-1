@@ -67,7 +67,7 @@ export const InventVendedor = () => {
                 <Typography sx={{ flexGrow: 1}}>
                     <h1>Inventario</h1>
                 </Typography>
-                <Button variant='contained' color='success'  onClick={() => navigate('/admin/addVendedores')}>
+                <Button variant='contained' color='success'  onClick={() => /*navigate('')*/ console.log('Aun no puedes hacer nada')}>
                     Agregar
                 </Button>
             </Stack>
