@@ -9,8 +9,6 @@ services:
       - "4000:4000"
     volumes:
       - "./api/src:/app/src"
-    links:
-      - postgres
 
   react:
     container_name: react
