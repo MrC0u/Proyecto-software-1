@@ -9,11 +9,9 @@ export default function Navbar({idUser}) {
   const navigate = useNavigate();
 
   return (
-    <div>
-      <Box sx={{ flexGrow: 1}}>
-        <AppBar position='static' color='transparent'>
-          <Container>
-            <Toolbar>
+    <AppBar position='static' /*color='transparent'*/>
+      <Container maxWidth="2">
+            <Toolbar disableGutters>
               <Typography variant='h6' sx={{ flexGrow: 1}}>
                 <Link to='' style={{textDecoration:'none', color:'#eee'}}> Inicio </Link>
               </Typography>
@@ -32,9 +30,7 @@ export default function Navbar({idUser}) {
                 </Button>
               </Stack>
             </Toolbar>
-          </Container>
-        </AppBar>
-      </Box>
-    </div>
+        </Container>
+      </AppBar>
   )
 }

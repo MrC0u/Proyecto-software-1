@@ -8,7 +8,7 @@ export default function App() {
   return (
     <div>
       <BrowserRouter>
-          <Container>
+          <Container maxWidth={false}>
             <Routes>
               <Route path="/" element={<Login/>}/>
               <Route path="/admin/*" element={<Admin/>}/>

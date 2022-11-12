@@ -11,7 +11,7 @@ export const Vendedor = () => {
     const params = useParams();
 
     return(
-            <Container>
+            <Container maxWidth={false}>
                 <Navbar idUser={params.id} />
                 <Routes>
                     <Route path='/' element={<div><h1>Soy Vendedor</h1></div>}/>
