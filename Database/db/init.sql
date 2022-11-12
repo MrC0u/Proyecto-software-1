@@ -8,5 +8,9 @@ CREATE TABLE Inventario(Id SERIAL, Nombre VARCHAR(200),PrecioVenta int, Categori
 INSERT INTO inventario(Id, Nombre, PrecioVenta, Categoria, Distribuidor, Stock, PrecioCompra, Detalle) VALUES (default, 'Coca-Cola', 1000, 'Bebidas', 'Coca-Cola Company', 13, 900, 'bebida');
 INSERT INTO inventario(Id, Nombre, PrecioVenta, Categoria, Distribuidor, Stock, PrecioCompra, Detalle) VALUES (default, 'Pepsi', 1100, 'Bebidas', 'CCU', 9, 900, 'bebida');
 INSERT INTO inventario(Id, Nombre, PrecioVenta, Categoria, Distribuidor, Stock, PrecioCompra, Detalle) VALUES (default, 'Escudo', 1900, 'Cervezas', 'CCU', 10, 500, 'cerveza excelente');
-INSERT INTO inventario(Id, Nombre, PrecioVenta, Categoria, Distribuidor, Stock, PrecioCompra, Detalle) VALUES (default, 'Papas Lays', 1000, 'Snacks', 'EverCrisp', 15, 700, 'bebida');
+INSERT INTO inventario(Id, Nombre, PrecioVenta, Categoria, Distribuidor, Stock, PrecioCompra, Detalle) VALUES (default, 'Papas Lays', 1000, 'Snacks', 'EverCrisp', 15, 700, 'comida');
+INSERT INTO inventario(Id, Nombre, PrecioVenta, Categoria, Distribuidor, Stock, PrecioCompra, Detalle) VALUES (default, 'Ramitas', 1000, 'Snacks', 'EverCrisp', 15, 1200, 'comida');
+INSERT INTO inventario(Id, Nombre, PrecioVenta, Categoria, Distribuidor, Stock, PrecioCompra, Detalle) VALUES (default, 'Cristal', 1900, 'Cervezas', 'CCU', 5, 400, 'cerveza');
+INSERT INTO inventario(Id, Nombre, PrecioVenta, Categoria, Distribuidor, Stock, PrecioCompra, Detalle) VALUES (default, 'Kunstmann', 1900, 'Cervezas', 'CCU', 15, 800, 'cerveza excelente');
+INSERT INTO inventario(Id, Nombre, PrecioVenta, Categoria, Distribuidor, Stock, PrecioCompra, Detalle) VALUES (default, 'Becker', 1900, 'Cervezas', 'CCU', 10, 500, 'cerveza excelente');
 

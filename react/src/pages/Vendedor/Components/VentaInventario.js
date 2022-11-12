@@ -47,6 +47,7 @@ export const VentaInventario = () => {
     setProductos(data);
   }
 
+  let marginLeft = 10;
   const [busqueda, setBusqueda] = useState([]);
   const [carro, setCarro] = useState([]);
   const [cantidad, setCantidad] = useState([]);
@@ -174,7 +175,7 @@ export const VentaInventario = () => {
         options={
           ((productos.map(object => object.categoria)).concat(productos.map(object => object.nombre))).filter(onlyUnique)
         }
-        sx={{ width: 700, mt: 4 }}
+        sx={{ width: 700, mt: 4, ml: marginLeft }}
         renderInput={(params) => (
           <TextField
             onChange={(event) => {
@@ -190,7 +191,7 @@ export const VentaInventario = () => {
           />
         )}
       />
-      <Grid container wrap="nowrap" direction="row" justifyContent="flex-start" alignItems="flex-start" spacing={0} columns={32} sx={{ maxHeight: 700 }}>
+      <Grid container wrap="nowrap" direction="row" justifyContent="flex-start" alignItems="flex-start" spacing={0} columns={32} sx={{ maxHeight: 700, ml: marginLeft }}>
         {/* ---------------- Productos ---------------- */}
         <Grid wrap="nowrap" container alignItems="center" justifyContent="flex-start" direction="row" sx={{ borderRadius: 2, width: 1100, height: 600, mt: 5, backgroundColor: '#DFDFDF' }}>
           {
@@ -285,7 +286,7 @@ export const VentaInventario = () => {
         </Grid>
       </Grid>
 
-      <Grid wrap="nowrap" container direction="row" justifyContent="flex-start" alignItems="flex-start" spacing={0} columns={32}>
+      <Grid wrap="nowrap" container direction="row" justifyContent="flex-start" alignItems="flex-start" spacing={0} columns={32} sx={{ml: marginLeft}}>
         {/* ---------------- Boton Finalizar ---------------- */}
         <Button
           variant="contained"
