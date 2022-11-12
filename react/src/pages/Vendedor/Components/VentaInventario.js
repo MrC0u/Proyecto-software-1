@@ -55,6 +55,7 @@ export const VentaInventario = () => {
 
   const navigate = useNavigate();
 
+  // Buscador
   const handleChange = search => {
     // Busqueda por categoria
     var cat = filterItems(productos.map(object => object.categoria), search).filter(onlyUnique)
@@ -84,29 +85,50 @@ export const VentaInventario = () => {
     setSelectCantidad(stock)
   }
 
-  const agregarCarro = async (element) => {
+  // Agregar producto a Carro
+  const agregarCarro = element => {
     var index = carro.indexOf(element)
     var cantidadCompra = selectCantidad[busqueda.indexOf(element)]
     var producto = productos.find(({ nombre }) => nombre === element)
 
-    // No existe en el Carro
-    if (index == -1) {
-      setCarro(carro.concat(element))
-      setCantidad(cantidad.concat(cantidadCompra))
-      setPrecio(precio.concat((cantidadCompra) * (producto.precioventa)))
-    } else {
-      // Existe en el Carro
-      cantidad[index] += cantidadCompra
-      setCantidad([...cantidad])
-      precio[index] += (cantidadCompra) * (producto.precioventa)
-      setPrecio([...precio])
+    if (cantidadCompra > 0) {
+      // No existe en el Carro
+      if (index == -1) {
+        setCarro(carro.concat(element))
+        setCantidad(cantidad.concat(cantidadCompra))
+        setPrecio(precio.concat((cantidadCompra) * (producto.precioventa)))
+      } else {
+        // Existe en el Carro
+        cantidad[index] += cantidadCompra
+        setCantidad([...cantidad])
+        precio[index] += (cantidadCompra) * (producto.precioventa)
+        setPrecio([...precio])
+      }
+      productos.find(({ nombre }) => nombre === element).stock -= cantidadCompra
+      setProductos([...productos])
+      selectCantidad[busqueda.indexOf(element)] = 0
+      setSelectCantidad([...selectCantidad])
     }
-    productos.find(({ nombre }) => nombre === element).stock -= cantidadCompra
-    setProductos([...productos])
-    selectCantidad[busqueda.indexOf(element)] = 0
-    setSelectCantidad([...selectCantidad])
   }
 
+
+  // Eliminar producto de carro
+
+  const eliminarCarro = index => {
+    var name = carro[index]
+    productos.find(({ nombre }) => nombre === name).stock += cantidad[index]
+    setPrecio(precio.splice(index, 1))
+    setCantidad(cantidad.splice(index, 1))
+    setCarro(carro.splice(index, 1))
+    selectCantidad[busqueda.indexOf(name)] = 1
+    setSelectCantidad([...selectCantidad])
+    setPrecio([...precio])
+    setCantidad([...cantidad])
+    setCarro([...carro])
+    setProductos([...productos])
+  }
+
+  // Aumentar Cantidad de producto
   const selectMore = index => {
     var stock = productos.find(({ nombre }) => nombre === busqueda[index]).stock
     if (selectCantidad[index] < stock) {
@@ -115,11 +137,17 @@ export const VentaInventario = () => {
     }
   }
 
+  // Disminuir Cantidad de producto
   const selectLess = index => {
     if (selectCantidad[index] > 1) {
       selectCantidad[index] -= 1
       setSelectCantidad([...selectCantidad])
     }
+  }
+
+  // Enviar Compra
+  const finalizarCompra = index => {
+    console.log('En proceso: Compra Finalizada')
   }
 
   const filterOptions = createFilterOptions({
@@ -131,6 +159,7 @@ export const VentaInventario = () => {
   }, []
   )
 
+  // Render
   return (
     <div>
       {/* ---------------- Buscador ---------------- */}
@@ -161,9 +190,9 @@ export const VentaInventario = () => {
           />
         )}
       />
-      <Grid container direction="row" justifyContent="flex-start" alignItems="flex-start" spacing={0} columns={32}>
+      <Grid container wrap="nowrap" direction="row" justifyContent="flex-start" alignItems="flex-start" spacing={0} columns={32} sx={{ maxHeight: 700 }}>
         {/* ---------------- Productos ---------------- */}
-        <Grid container alignItems="center" justifyContent="flex-start" direction="row" sx={{ borderRadius: 2, width: 1100, height: 600, mt: 5, backgroundColor: '#DFDFDF' }}>
+        <Grid wrap="nowrap" container alignItems="center" justifyContent="flex-start" direction="row" sx={{ borderRadius: 2, width: 1100, height: 600, mt: 5, backgroundColor: '#DFDFDF' }}>
           {
             busqueda?.map(elemento => (
               <Card sx={{ maxWidth: 300, minWidth: 300, minHeight: 300, ml: 4, mr: 2 }}>
@@ -184,7 +213,7 @@ export const VentaInventario = () => {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Badge color="secondary" badgeContent={selectCantidad[busqueda.indexOf(elemento)]}>
+                  <Badge color="primary" badgeContent={selectCantidad[busqueda.indexOf(elemento)]}>
                     <ShoppingCartIcon />{" "}
                   </Badge>
                   <ButtonGroup>
@@ -234,10 +263,14 @@ export const VentaInventario = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {carro.map((row) => (
+                {carro.map((row, index) => (
                   <TableRow
+                    onClick={() => {
+                      eliminarCarro(index)
+                    }}
+                    hover
                     key={row}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                    sx={{ color: 'secondary', '&:last-child td, &:last-child th': { border: 0 } }}
                   >
                     <TableCell component="th" scope="row">
                       {row}
@@ -252,24 +285,24 @@ export const VentaInventario = () => {
         </Grid>
       </Grid>
 
-      <Grid container direction="row" justifyContent="flex-start" alignItems="flex-start" spacing={0} columns={32}>
+      <Grid wrap="nowrap" container direction="row" justifyContent="flex-start" alignItems="flex-start" spacing={0} columns={32}>
         {/* ---------------- Boton Finalizar ---------------- */}
         <Button
           variant="contained"
           color="success"
-          sx={{ width: 1100, height: 100, mt: 2, mr: 5 }}
+          sx={{ width: 1100, height: 100, mt: 2, mr: 0 }}
           onClick={() => {
-            console.log('test')
+            finalizarCompra();
           }}
         >
           {" "}
           <Typography variant="h5" color="white">
-            Finalizar
+            Finalizar Venta
           </Typography>
         </Button>
-        
+
         {/* ---------------- Precio Total ---------------- */}
-        <Card sx={{ width: 400, height: 100, mt: 2, backgroundColor: "#1c1c1c" }}>
+        <Card sx={{ width: 400, height: 100, mt: 2, ml: 5, backgroundColor: "#1c1c1c" }}>
           <CardContent >
             <Typography variant="h4" color="white" >
               Total: $ {numberWithCommas(precio.reduce((previousValue, currentValue) => previousValue + currentValue, 0))}
@@ -278,13 +311,6 @@ export const VentaInventario = () => {
         </Card>
 
       </Grid>
-
-
-
-
-
-
-
 
     </div>
 
