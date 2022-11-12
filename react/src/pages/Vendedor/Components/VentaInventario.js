@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import {
   TextField, Autocomplete, Typography, createFilterOptions, Box, Container, Grid, Item, Card,
   CardContent, CardMedia, CardActions, Button, TableContainer, Paper, Table, TableHead, TableCell, TableRow,
-  Badge, ButtonGroup, TableBody
+  Badge, ButtonGroup, TableBody, chipClasses
 } from '@mui/material'
 import { useNavigate } from 'react-router-dom';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -24,6 +24,19 @@ function numberWithCommas(x) {
   return parts.join(",");
 }
 
+function removeArray(array, value) {
+  for (var i = array.length; i--;) {
+    if (array[i] === value) {
+      array.splice(i, 1);
+    }
+  }
+  return array
+}
+
+function getStock(name) {
+
+}
+
 export const VentaInventario = () => {
 
   const [productos, setProductos] = useState([]);
@@ -34,12 +47,7 @@ export const VentaInventario = () => {
     setProductos(data);
   }
 
-  useEffect(() => {
-    loadProducts();
-  }, []
-  )
-
-  const [busqueda, setBusqueda] = useState((filterItems(productos.map(object => object.nombre), '')).slice(0, 3));
+  const [busqueda, setBusqueda] = useState([]);
   const [carro, setCarro] = useState([]);
   const [cantidad, setCantidad] = useState([]);
   const [precio, setPrecio] = useState([]);
@@ -48,27 +56,63 @@ export const VentaInventario = () => {
   const navigate = useNavigate();
 
   const handleChange = search => {
-    setBusqueda((filterItems(productos.map(object => object.nombre), search)).slice(0, 3))
-    setSelectCantidad([1, 1, 1])
+    // Busqueda por categoria
+    var cat = filterItems(productos.map(object => object.categoria), search).filter(onlyUnique)
+    var findCat = productos.map((object) => {
+      if (cat.includes(object.categoria)) {
+        return object.nombre
+      }
+      return null
+    })
+    findCat = removeArray(findCat, null)
+    // Busqueda por nombre
+    var findName = filterItems((productos.map(object => object.nombre)), search)
+    // Filtro busqueda por Nombre + Categoria ( Evitar repeticiones )
+    var buscar = (findName.concat(findCat)).filter(onlyUnique)
+    buscar = buscar.slice(0, 3)
+    setBusqueda(buscar)
+
+    // Bug Fix - Para que siempre salga 1 para comprar almenos que no exista stock
+    var stock = [1, 1, 1]
+    var count = 0
+    buscar.map((obj) => {
+      if (productos.find(({ nombre }) => nombre === obj).stock === 0) {
+        stock[count] = 0
+      }
+      count += 1
+    })
+    setSelectCantidad(stock)
   }
 
   const agregarCarro = async (element) => {
     var index = carro.indexOf(element)
+    var cantidadCompra = selectCantidad[busqueda.indexOf(element)]
+    var producto = productos.find(({ nombre }) => nombre === element)
+
+    // No existe en el Carro
     if (index == -1) {
       setCarro(carro.concat(element))
-      setCantidad(cantidad.concat(selectCantidad[busqueda.indexOf(element)]))
-      setPrecio(precio.concat((selectCantidad[busqueda.indexOf(element)]) * (productos.find(({ nombre }) => nombre === element).precioventa)))
+      setCantidad(cantidad.concat(cantidadCompra))
+      setPrecio(precio.concat((cantidadCompra) * (producto.precioventa)))
     } else {
-      cantidad[index] += selectCantidad[busqueda.indexOf(element)]
+      // Existe en el Carro
+      cantidad[index] += cantidadCompra
       setCantidad([...cantidad])
-      precio[index] += (selectCantidad[busqueda.indexOf(element)]) * (productos.find(({ nombre }) => nombre === element).precioventa)
+      precio[index] += (cantidadCompra) * (producto.precioventa)
       setPrecio([...precio])
     }
+    productos.find(({ nombre }) => nombre === element).stock -= cantidadCompra
+    setProductos([...productos])
+    selectCantidad[busqueda.indexOf(element)] = 0
+    setSelectCantidad([...selectCantidad])
   }
 
   const selectMore = index => {
-    selectCantidad[index] += 1
-    setSelectCantidad([...selectCantidad])
+    var stock = productos.find(({ nombre }) => nombre === busqueda[index]).stock
+    if (selectCantidad[index] < stock) {
+      selectCantidad[index] += 1
+      setSelectCantidad([...selectCantidad])
+    }
   }
 
   const selectLess = index => {
@@ -82,8 +126,14 @@ export const VentaInventario = () => {
     limit: 5,
   });
 
+  useEffect(() => {
+    loadProducts();
+  }, []
+  )
+
   return (
     <div>
+      {/* ---------------- Buscador ---------------- */}
       <Autocomplete
         freeSolo
         id="search-input"
@@ -112,8 +162,8 @@ export const VentaInventario = () => {
         )}
       />
       <Grid container direction="row" justifyContent="flex-start" alignItems="flex-start" spacing={0} columns={32}>
-
-        <Grid container alignItems="center" justifyContent="flex-start" direction="row" sx={{ width: 1100, height: 600, mt: 5, backgroundColor: '#999999' }}>
+        {/* ---------------- Productos ---------------- */}
+        <Grid container alignItems="center" justifyContent="flex-start" direction="row" sx={{ borderRadius: 2, width: 1100, height: 600, mt: 5, backgroundColor: '#DFDFDF' }}>
           {
             busqueda?.map(elemento => (
               <Card sx={{ maxWidth: 300, minWidth: 300, minHeight: 300, ml: 4, mr: 2 }}>
@@ -167,15 +217,15 @@ export const VentaInventario = () => {
 
                 </CardActions>
               </Card>
-
             )
             )}
 
         </Grid>
-        <Grid sx={{ width: 400, height: 600, mt: 5, ml: 5, backgroundColor: '#999999' }}>
+        {/* ---------------- Carro ---------------- */}
+        <Grid sx={{ borderRadius: 2, width: 400, height: 600, mt: 5, ml: 5, backgroundColor: '#424444' }}>
 
           <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 100, backgroundColor: '#999999' }} aria-label="simple table">
+            <Table sx={{ minWidth: 100, backgroundColor: '#FFFFFF' }} size="small" aria-label="a dense table">
               <TableHead>
                 <TableRow>
                   <TableCell>Producto</TableCell>
@@ -193,19 +243,17 @@ export const VentaInventario = () => {
                       {row}
                     </TableCell>
                     <TableCell align="right">{cantidad[carro.indexOf(row)]}</TableCell>
-                    <TableCell align="right">{precio[carro.indexOf(row)]}</TableCell>
+                    <TableCell align="right">{numberWithCommas(precio[carro.indexOf(row)])}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
             </Table>
           </TableContainer>
-
-
         </Grid>
-
       </Grid>
 
       <Grid container direction="row" justifyContent="flex-start" alignItems="flex-start" spacing={0} columns={32}>
+        {/* ---------------- Boton Finalizar ---------------- */}
         <Button
           variant="contained"
           color="success"
@@ -219,7 +267,8 @@ export const VentaInventario = () => {
             Finalizar
           </Typography>
         </Button>
-
+        
+        {/* ---------------- Precio Total ---------------- */}
         <Card sx={{ width: 400, height: 100, mt: 2, backgroundColor: "#1c1c1c" }}>
           <CardContent >
             <Typography variant="h4" color="white" >
