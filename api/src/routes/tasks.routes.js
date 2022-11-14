@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { getVendedores, create, deleteVendedor, login, userLevel, getId, cambioClave, createProducto, getProductos, getCategorias, addImages } = require('../controllers/tasks.controller');
+const { getVendedores, create, deleteVendedor, login, userLevel, getId, cambioClave, createProducto, getProductos, getCategorias, addImages, deleteProducto } = require('../controllers/tasks.controller');
 
 const router = Router();
 
@@ -32,5 +32,7 @@ router.get('/productos',getProductos);
 router.get('/categorias',getCategorias);
 
 router.post('/images/post',addImages)
+
+router.delete('/deleteProducto/:id', deleteProducto)
 
 module.exports = router;

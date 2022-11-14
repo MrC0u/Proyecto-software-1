@@ -39,6 +39,15 @@ export const InventAdmin = () => {
     loadProductos();
   }, [])
 
+  const BorrarProducto = async (data) => {
+
+    const response = await fetch(`http://${process.env.REACT_APP_IP}:4000/deleteProducto/${data}`, {
+      method: 'DELETE'
+    });
+    console.log(response);
+    loadProductos();
+  }
+
   return (
     <div>
       <Grid container justifyContent="space-between" alignItems="center" sx={{ borderRadius: 2, mt: 1, /*backgroundColor: 'black'*/ }}>
@@ -59,7 +68,7 @@ export const InventAdmin = () => {
             Agregar
           </Button>
         </Grid>
-
+        
       </Grid>
 
       <Grid wrap="wrap" container alignItems="center" justifyContent="flex-start" direction="row" sx={{ overflow: 'auto', borderRadius: 2, width: '100%', minHeight: 400, maxHeight: 700, mt: 2, backgroundColor: '#DFDFDF' }}>
@@ -158,7 +167,7 @@ export const InventAdmin = () => {
               </Typography>
             </CardContent>
             <Button
-              onClick={() => {console.log('Se Borra: ', selection.nombre )}}
+              onClick={ () => { BorrarProducto(selection?.id) }}
               variant="contained"
               color="error"
             >

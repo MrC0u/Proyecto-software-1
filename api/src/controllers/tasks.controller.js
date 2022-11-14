@@ -134,6 +134,21 @@ const addImages = async (req,res) => {
     console.log(req.body)
 }
 
+
+const deleteProducto = async (req, res) =>{
+    const {id} = req.params;
+    console.log("aaaa ", req.params)
+    const result = await pool.query('DELETE FROM inventario where id = $1', [id])
+
+    if (result.rowCount === 0)
+        return res.status(404).json({
+            message: "Producto not found"
+        });
+    
+
+    return res.sendStatus(204);
+}
+
 module.exports = {
     getVendedores,
     create,
@@ -145,5 +160,6 @@ module.exports = {
     createProducto,
     getProductos,
     getCategorias,
-    addImages
+    addImages,
+    deleteProducto
 }
