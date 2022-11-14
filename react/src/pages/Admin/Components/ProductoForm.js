@@ -1,4 +1,5 @@
 import React,{useState} from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Card,
   CardContent,
@@ -22,6 +23,7 @@ export const ProductoForm = () => {
   })
   const [loading, setLoading] = useState(false)
 
+  const navigate = useNavigate();
 
   const selectedHandler = e => {
     let algo = e.target.files[0]
@@ -74,6 +76,7 @@ export const ProductoForm = () => {
     const data= await res.json();
     console.log(data)
     setLoading(false);
+    navigate("/admin/inventario")
     
   }
 

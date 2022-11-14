@@ -59,7 +59,7 @@ export const VentaInventario = () => {
   // Buscador
   const handleChange = search => {
     // Busqueda por categoria
-    var cat = filterItems(productos.map(object => object.categoria), search).filter(onlyUnique)
+    var cat = filterItems(productos?.map(object => object.categoria), search).filter(onlyUnique)
     var findCat = productos.map((object) => {
       if (cat.includes(object.categoria)) {
         return object.nombre
@@ -71,11 +71,14 @@ export const VentaInventario = () => {
     var findName = filterItems((productos.map(object => object.nombre)), search)
     // Filtro busqueda por Nombre + Categoria ( Evitar repeticiones )
     var buscar = (findName.concat(findCat)).filter(onlyUnique)
-    buscar = buscar.slice(0, 3)
+    //buscar = buscar.slice(0, 3)
     setBusqueda(buscar)
 
     // Bug Fix - Para que siempre salga 1 para comprar almenos que no exista stock
-    var stock = [1, 1, 1]
+    var stock = []
+    for (var i = buscar.length; i--;) {
+      stock.push(1)
+    }
     var count = 0
     buscar.map((obj) => {
       if (productos.find(({ nombre }) => nombre === obj).stock === 0) {
@@ -193,10 +196,10 @@ export const VentaInventario = () => {
       />
       <Grid container wrap="nowrap" direction="row" justifyContent="flex-start" alignItems="flex-start" spacing={0} columns={32} sx={{ maxHeight: 700, ml: marginLeft }}>
         {/* ---------------- Productos ---------------- */}
-        <Grid wrap="nowrap" container alignItems="center" justifyContent="flex-start" direction="row" sx={{ borderRadius: 2, width: 1100, height: 600, mt: 5, backgroundColor: '#DFDFDF' }}>
+        <Grid container alignItems="center" justifyContent="flex-start" direction="row" sx={{ overflow: 'auto', borderRadius: 2, width: 1100, height: 600, mt: 5, backgroundColor: '#DFDFDF' }}>
           {
             busqueda?.map(elemento => (
-              <Card sx={{ maxWidth: 300, minWidth: 300, minHeight: 300, ml: 4, mr: 2 }}>
+              <Card sx={{ maxWidth: 300, minWidth: 300, minHeight: 300, ml: 4, mr: 2, mt: 4, mb: 5 }}>
                 <CardMedia
                   component="img"
                   height="300"
@@ -286,7 +289,7 @@ export const VentaInventario = () => {
         </Grid>
       </Grid>
 
-      <Grid wrap="nowrap" container direction="row" justifyContent="flex-start" alignItems="flex-start" spacing={0} columns={32} sx={{ml: marginLeft}}>
+      <Grid wrap="nowrap" container direction="row" justifyContent="flex-start" alignItems="flex-start" spacing={0} columns={32} sx={{ ml: marginLeft }}>
         {/* ---------------- Boton Finalizar ---------------- */}
         <Button
           variant="contained"

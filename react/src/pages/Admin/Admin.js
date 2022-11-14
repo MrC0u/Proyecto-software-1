@@ -10,18 +10,16 @@ import {ProductoForm} from "./Components/ProductoForm";
 
 export const Admin = () => {
     return(
-        <div>
-            <Container>
-                <Navbar/>
-                    <Routes>
-                        <Route path='/' element={<div><h1>Soy Admin</h1></div>}/>
-                        <Route path='listVendedores' element={<VendorList />} />
-                        <Route path='addVendedores' element={<VendorForm />} />
-                        <Route path='inventario' element={<InventAdmin/>}/>
-                        <Route path='addProducto' element={<ProductoForm/>}/>                
-                    </Routes>
-            </Container>
-        </div>
+        <Container maxWidth={false}>
+            <Navbar/>
+                <Routes>
+                    <Route path='/' element={<div><h1>Soy Admin</h1></div>}/>
+                    <Route path='listVendedores' element={<VendorList />} />
+                    <Route path='addVendedores' element={<VendorForm />} />
+                    <Route path='inventario' element={<InventAdmin/>}/>
+                    <Route path='addProducto' element={<ProductoForm/>}/>                
+                </Routes>
+        </Container>
     )
 
 }
