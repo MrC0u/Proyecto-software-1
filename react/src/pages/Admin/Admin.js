@@ -6,6 +6,7 @@ import Navbar from "./Components/Navbar";
 import { Container } from '@mui/material';
 import { InventAdmin } from "./Components/InventAdmin";
 import {ProductoForm} from "./Components/ProductoForm";
+import {VentaInventario} from "./Components/VentaInventario";
 
 
 export const Admin = () => {
@@ -17,7 +18,8 @@ export const Admin = () => {
                     <Route path='listVendedores' element={<VendorList />} />
                     <Route path='addVendedores' element={<VendorForm />} />
                     <Route path='inventario' element={<InventAdmin/>}/>
-                    <Route path='addProducto' element={<ProductoForm/>}/>                
+                    <Route path='addProducto' element={<ProductoForm/>}/>   
+                    <Route path='venta' element={<VentaInventario/>}/>             
                 </Routes>
         </Container>
     )

@@ -1,126 +1,111 @@
-import React from 'react';
-import { Grid, Card, CardContent, CardMedia, Typography, CardActionArea, Stack, Button } from '@mui/material'
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Grid, Card, CardContent, CardMedia, Typography, CardActionArea, Button, Backdrop, ClickAwayListener, Box } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 
 
-const inventario = [
-    {
-        Id: '1',
-        nombre: 'Becker',
-        precioVenta: '1000',
-        categoria: 'cerveza',
-        distribuidor: 'BeckerCompani',
-        cantidad: '15',
-        precioCompra: '100',
-        detalle: '',
-        imagen: 'becker'
-
-    },
-    {
-        Id: '2',
-        nombre: 'Escudo',
-        precioVenta: '1100',
-        categoria: 'cerveza',
-        distribuidor: 'CCU',
-        cantidad: '16',
-        precioCompra: '200',
-        detalle: '',
-        imagen: 'escudo'
-
-    },
-    {
-        Id: '3',
-        nombre: 'sprite',
-        precioVenta: '1900',
-        categoria: 'bebida',
-        distribuidor: 'Coca-Cola Company',
-        cantidad: '1',
-        precioCompra: '900',
-        detalle: '',
-        imagen: 'sprite'
-
-    },
-    {
-        Id: '4',
-        nombre: 'papitas',
-        precioVenta: '2000',
-        categoria: 'cerveza',
-        distribuidor: 'Evercrisp',
-        cantidad: '1000',
-        precioCompra: '1200',
-        detalle: '',
-        imagen: 'papitas'
-
-    },
-]
 
 export const InventVendedor = () => {
     //BASE DE DATOS FICTICIA
-    const inv = inventario;
-
+    //const inv= inventario;
     const navigate = useNavigate();
+
+    const [inv, setInv] = useState([])
+
+    const loadProductos = async () => {
+
+        const response = await fetch(`http://${process.env.REACT_APP_IP}:4000/productos`);
+        const data = await response.json();
+        console.log(data);
+        setInv(data);
+    }
+
+    const [open, setOpen] = useState(false);
+    const [selection, setSelection] = useState(null);
+
+
+    const handleClose = () => {
+        setOpen(false);
+        console.log('close')
+    }
+
+    const handleClick = (data) => {
+        setSelection(data)
+        setOpen((prev) => !prev)
+        console.log('handle')
+    }
+
+    useEffect(() => {
+        loadProductos();
+    }, [])
+
+    const BorrarProducto = async (data) => {
+
+        const response = await fetch(`http://${process.env.REACT_APP_IP}:4000/deleteProducto/${data}`, {
+            method: 'DELETE'
+        });
+        console.log(response);
+        loadProductos();
+    }
+
     return (
         <div>
-            <Stack direction="row" sx={{
-                my: 5
-            }}>
-                <Typography sx={{ flexGrow: 1 }}>
-                    <h1>Inventario</h1>
-                </Typography>
-                <Button variant='contained' color='success' onClick={() => /*navigate('')*/ console.log('Aun no puedes hacer nada')}>
-                    Agregar
-                </Button>
-            </Stack>
+            <Grid container justifyContent="space-between" alignItems="center" sx={{ borderRadius: 2, mt: 1, /*backgroundColor: 'black'*/ }}>
 
+                <Grid sx={{ ml: 5 }}>
+                    <Typography>
+                        <h1>Inventario</h1>
+                    </Typography>
+                </Grid>
 
-            <Grid wrap="nowrap" container alignItems="center" justifyContent="flex-start" direction="row" sx={{ borderRadius: 2, width: '100%', height: 600, mt: 5, backgroundColor: '#DFDFDF' }}>
+            </Grid>
+
+            <Grid wrap="wrap" container alignItems="center" justifyContent="flex-start" direction="row" sx={{ overflow: 'auto', borderRadius: 2, width: '100%', minHeight: 400, maxHeight: 700, mt: 2, backgroundColor: '#DFDFDF' }}>
                 {
                     inv.map(data => (
-                        <Card sx={{ maxWidth: 300, minWidth: 300, minHeight: 300, ml: 4, mr: 2 }}>
-                            <CardActionArea>
-                                <CardMedia
-                                    component="img"
-                                    height="140"
-                                    image="https://www.smashbros.com/wiiu-3ds/images/character/link/main.png"
-                                    alt={data.imagen}
-                                />
+                        <Card sx={{ maxWidth: 300, minWidth: 300, minHeight: 300, ml: 4, mr: 2, mt: 3, mb: 3 }}>
+                            <CardMedia
+                                component="img"
+                                height="160"
+                                image={`${process.env.REACT_APP_IMAGE_LINK}`}
+                                alt={data.imagen}
+                            />
 
-                                <CardContent>
-                                    <Typography>
-                                        Nombre: {data.nombre}
-                                    </Typography>
+                            <CardContent>
+                                <Typography>
+                                    Nombre: {data.nombre}
+                                </Typography>
 
-                                    <Typography>
-                                        Precio Venta: {data.precioVenta}
-                                    </Typography>
+                                <Typography>
+                                    Precio Venta: {data.precioVenta}
+                                </Typography>
 
-                                    <Typography>
-                                        Categoria: {data.categoria}
-                                    </Typography>
+                                <Typography>
+                                    Categoria: {data.categoria}
+                                </Typography>
 
-                                    <Typography>
-                                        Distribuidor: {data.distribuidor}
-                                    </Typography>
+                                <Typography>
+                                    Distribuidor: {data.distribuidor}
+                                </Typography>
 
-                                    <Typography>
-                                        Stock: {data.cantidad}
-                                    </Typography>
+                                <Typography>
+                                    Stock: {data.cantidad}
+                                </Typography>
 
-                                    <Typography>
-                                        Precio compra: {data.precioCompra}
-                                    </Typography>
+                                <Typography>
+                                    Precio compra: {data.precioCompra}
+                                </Typography>
 
-                                    <Typography>
-                                        Descripcion: {data.detalle}
-                                    </Typography>
-                                </CardContent>
-                            </CardActionArea>
+                                <Typography>
+                                    Descripcion: {data.detalle}
+                                </Typography>
+                            </CardContent>
                         </Card>
+
                     ))
                 }
             </Grid>
 
-
         </div>
-    )
-}
+    );
+};

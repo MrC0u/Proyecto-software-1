@@ -81,7 +81,7 @@ export const InventAdmin = () => {
                 <CardMedia
                   component="img"
                   height="160"
-                  image="https://www.smashbros.com/wiiu-3ds/images/character/link/main.png"
+                  image={`${process.env.REACT_APP_IMAGE_LINK}`}
                   alt={data.imagen}
                 />
 
@@ -133,7 +133,7 @@ export const InventAdmin = () => {
               component="img"
               sx={{ width: 151 }}
               height="140"
-              image="https://www.smashbros.com/wiiu-3ds/images/character/link/main.png"
+              image={`${process.env.REACT_APP_IMAGE_LINK}`}
               alt={selection?.imagen}
             />
 
@@ -167,7 +167,10 @@ export const InventAdmin = () => {
               </Typography>
             </CardContent>
             <Button
-              onClick={ () => { BorrarProducto(selection?.id) }}
+              onClick={ () => { 
+                BorrarProducto(selection?.id)
+                handleClose()
+               }}
               variant="contained"
               color="error"
             >

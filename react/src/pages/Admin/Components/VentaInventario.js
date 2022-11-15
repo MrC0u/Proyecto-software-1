@@ -39,14 +39,6 @@ function getStock(name) {
 
 export const VentaInventario = () => {
 
-  const [productos, setProductos] = useState([]);
-
-  const loadProducts = async () => {
-    const response = await fetch(`http://${process.env.REACT_APP_IP}:4000/productos`);
-    const data = await response.json();
-    setProductos(data);
-  }
-
   let marginLeft = 10;
   const [busqueda, setBusqueda] = useState([]);
   const [carro, setCarro] = useState([]);
@@ -55,6 +47,16 @@ export const VentaInventario = () => {
   const [selectCantidad, setSelectCantidad] = useState([1, 1, 1]);
 
   const navigate = useNavigate();
+
+
+  const [productos, setProductos] = useState([]);
+
+  const loadProducts = async () => {
+    const response = await fetch(`http://${process.env.REACT_APP_IP}:4000/productos`);
+    const data = await response.json();
+    setProductos(data);
+    setBusqueda(busqueda.concat(["Coca-Cola"]));
+  }
 
   // Buscador
   const handleChange = search => {

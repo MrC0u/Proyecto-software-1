@@ -131,7 +131,7 @@ const getCategorias = async (req, res) => {
 }
 
 const addImages = async (req,res) => {
-    console.log(req.body)
+    console.log(req)
 }
 
 

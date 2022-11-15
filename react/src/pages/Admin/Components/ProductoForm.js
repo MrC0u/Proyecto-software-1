@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Card,
@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 
 export const ProductoForm = () => {
-  const [file,setFile] = useState(null)
+
   const [producto, setProducto] = useState({
     nombre: '',
     precioVenta: 0,
@@ -21,63 +21,68 @@ export const ProductoForm = () => {
     precioCompra: 0,
     detalle: '',
   })
+
   const [loading, setLoading] = useState(false)
 
   const navigate = useNavigate();
 
+  // Seleccion Archivo
+
+  const [file, setFile] = useState(null)
+
   const selectedHandler = e => {
-    let algo = e.target.files[0]
-    console.log("soy e: ",algo)
-    setFile(algo)
-  }
-  const sendHandler = (e) => {
-    e.preventDefault();
-    if (!file){
-      alert('tu necesitas subir una foto')
-      return
-    }
-    const formdata = new FormData()
-    formdata.append('image',file)
-    formdata.append('nombre',producto.nombre)
-    console.log(formdata)
-    fetch('http://api:4000/images/post',{
-      method: 'POST',
-      body: formdata,
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    .then(res => res.text())
-    .then(res => console.log(res))
-    .catch(err => {
-      console.error(err)
-    })
-    setFile(null)
+    let imagen = e.target.files[0]
+    console.log("soy e: ", imagen)
+    setFile(imagen)
   }
 
-  const handleChange = e =>{
+  const sendHandler = (e) => {
+    e.preventDefault();
+    if (!file) {
+      alert('Debes subir una imagen')
+      return
+    }
+    const formData = new FormData()
+    formData.append('image', file)
+    formData.append('nombre', producto.nombre)
+    console.log(producto.nombre)
+    console.log(formData)
+    fetch(`http://${process.env.REACT_APP_IP}:4000/images/post`, {
+      method: 'POST',
+      body: formData
+    }).then((resp) => {
+      resp.json().then((result) => {
+        console.log("Resultado: ", result)
+      })
+    }).catch(err => {
+        console.error(err)
+      })
+    //setFile(null)
+  }
+
+  // Fin Seleccion Imagen 
+
+  const handleChange = e => {
     //console.log( ," - ",e.target.value)
-    setProducto({...producto,[e.target.name]:[e.target.value]})
+    setProducto({ ...producto, [e.target.name]: [e.target.value] })
     console.log(file)
   }
 
 
-  const handleSubmit = async (e) =>{
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    
-    
+
     setLoading(true);
-    const res = await fetch(`http://${process.env.REACT_APP_IP}:4000/createProducto`,{
-        method:'POST',
-        body: JSON.stringify(producto),
-        headers: {"Content-Type": "application/json" },
+    const res = await fetch(`http://${process.env.REACT_APP_IP}:4000/createProducto`, {
+      method: 'POST',
+      body: JSON.stringify(producto),
+      headers: { "Content-Type": "application/json" },
     });
-    const data= await res.json();
+    const data = await res.json();
     console.log(data)
     setLoading(false);
     navigate("/admin/inventario")
-    
+
   }
 
 
@@ -115,7 +120,7 @@ export const ProductoForm = () => {
                 onChange={handleChange}
                 inputProps={{ style: { color: "white" } }}
                 InputLabelProps={{ style: { color: "white" } }}
-                
+
               />
 
               <TextField
@@ -131,7 +136,7 @@ export const ProductoForm = () => {
                 onChange={handleChange}
                 inputProps={{ style: { color: "white" } }}
                 InputLabelProps={{ style: { color: "white" } }}
-                
+
               />
 
               <TextField
@@ -146,7 +151,7 @@ export const ProductoForm = () => {
                 onChange={handleChange}
                 inputProps={{ style: { color: "white" } }}
                 InputLabelProps={{ style: { color: "white" } }}
-                
+
               />
 
               <TextField
@@ -161,7 +166,7 @@ export const ProductoForm = () => {
                 onChange={handleChange}
                 inputProps={{ style: { color: "white" } }}
                 InputLabelProps={{ style: { color: "white" } }}
-                
+
               />
 
               <TextField
@@ -177,7 +182,7 @@ export const ProductoForm = () => {
                 onChange={handleChange}
                 inputProps={{ style: { color: "white" } }}
                 InputLabelProps={{ style: { color: "white" } }}
-                
+
               />
 
               <TextField
@@ -193,7 +198,7 @@ export const ProductoForm = () => {
                 onChange={handleChange}
                 inputProps={{ style: { color: "white" } }}
                 InputLabelProps={{ style: { color: "white" } }}
-                
+
               />
 
               <TextField
@@ -203,22 +208,25 @@ export const ProductoForm = () => {
                 sx={{
                   display: "block",
                   margin: ".10rem 0",
+                  width: '100%'
                 }}
                 name="detalle"
                 onChange={handleChange}
                 inputProps={{ style: { color: "white" } }}
                 InputLabelProps={{ style: { color: "white" } }}
-                
+
               />
 
               {<TextField
+                // Subida Imagen
+
                 //variant="filled"
-                
                 type="file"
                 label="Imagen"
                 sx={{
                   display: "block",
                   margin: ".10rem 0",
+                  mt: 3
                 }}
                 name="imagen"
                 onChange={selectedHandler}
@@ -227,10 +235,14 @@ export const ProductoForm = () => {
                 focused
               />}
 
+
               <Button
                 variant="contained"
                 color="primary"
                 type="submit"
+                sx={{
+                  mt: 2
+                }}
                 disabled={
                   !producto.nombre ||
                   !producto.precioVenta ||
@@ -249,7 +261,7 @@ export const ProductoForm = () => {
               </Button>
             </form>
           </CardContent>
-          
+
         </Card>
       </Grid>
     </Grid>
