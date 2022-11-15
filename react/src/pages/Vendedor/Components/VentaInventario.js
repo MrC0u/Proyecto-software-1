@@ -45,6 +45,7 @@ export const VentaInventario = () => {
     const response = await fetch(`http://${process.env.REACT_APP_IP}:4000/productos`);
     const data = await response.json();
     setProductos(data);
+    setBusqueda(busqueda.concat(["Coca-Cola"]));
   }
 
   let marginLeft = 10;
@@ -151,7 +152,7 @@ export const VentaInventario = () => {
 
   // Enviar Compra
   const finalizarCompra = index => {
-    console.log('En proceso: Compra Finalizada')
+    alert('En proceso: Venta Finalizada')
   }
 
   const filterOptions = createFilterOptions({

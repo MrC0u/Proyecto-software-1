@@ -77,7 +77,7 @@ export const InventVendedor = () => {
                                 </Typography>
 
                                 <Typography>
-                                    Precio Venta: {data.precioVenta}
+                                    Precio Venta: {data.precioventa}
                                 </Typography>
 
                                 <Typography>
@@ -89,11 +89,11 @@ export const InventVendedor = () => {
                                 </Typography>
 
                                 <Typography>
-                                    Stock: {data.cantidad}
+                                    Stock: {data.stock}
                                 </Typography>
 
                                 <Typography>
-                                    Precio compra: {data.precioCompra}
+                                    Precio compra: {data.preciocompra}
                                 </Typography>
 
                                 <Typography>

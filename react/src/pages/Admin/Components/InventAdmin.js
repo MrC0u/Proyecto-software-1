@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Grid, Card, CardContent, CardMedia, Typography, CardActionArea, Button, Backdrop, ClickAwayListener, Box } from '@mui/material';
+import { Grid, Card, CardContent, CardMedia, Typography, CardActionArea, Button, Backdrop, ClickAwayListener, Box, TextField, CircularProgress } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
 
@@ -16,23 +16,32 @@ export const InventAdmin = () => {
 
     const response = await fetch(`http://${process.env.REACT_APP_IP}:4000/productos`);
     const data = await response.json();
-    console.log(data);
     setInv(data);
   }
 
   const [open, setOpen] = useState(false);
   const [selection, setSelection] = useState(null);
+  const [modificar, setModificar] = useState(false);
+  const [loading, setLoading] = useState(false)
 
+  const [producto, setProducto] = useState({
+    nombre: '',
+    precioventa: 0,
+    categoria: '',
+    distribuidor: '',
+    stock: 0,
+    preciocompra: 0,
+    detalle: ''
+  })
 
   const handleClose = () => {
+    setModificar(false);
     setOpen(false);
-    console.log('close')
   }
 
   const handleClick = (data) => {
     setSelection(data)
     setOpen((prev) => !prev)
-    console.log('handle')
   }
 
   useEffect(() => {
@@ -44,8 +53,28 @@ export const InventAdmin = () => {
     const response = await fetch(`http://${process.env.REACT_APP_IP}:4000/deleteProducto/${data}`, {
       method: 'DELETE'
     });
-    console.log(response);
     loadProductos();
+  }
+
+  const enviarModificacion = async () => {
+    const res = await fetch(`http://${process.env.REACT_APP_IP}:4000/modificarProducto`, {
+      method: 'POST',
+      body: JSON.stringify(producto),
+      headers: {"Content-Type": "application/json" },
+  });
+    const data = await res.json();
+    handleClose()
+    loadProductos()
+  }
+
+  const modificarProducto = e => {
+    //console.log( ," - ",e.target.value)
+    setProducto({ ...producto, [e.target.name]: e.target.value })
+  }
+
+  const handleModify = async (value) => {
+    setProducto(value)
+    setModificar(true)
   }
 
   return (
@@ -68,7 +97,7 @@ export const InventAdmin = () => {
             Agregar
           </Button>
         </Grid>
-        
+
       </Grid>
 
       <Grid wrap="wrap" container alignItems="center" justifyContent="flex-start" direction="row" sx={{ overflow: 'auto', borderRadius: 2, width: '100%', minHeight: 400, maxHeight: 700, mt: 2, backgroundColor: '#DFDFDF' }}>
@@ -91,7 +120,7 @@ export const InventAdmin = () => {
                   </Typography>
 
                   <Typography>
-                    Precio Venta: {data.precioVenta}
+                    Precio Venta: {data.precioventa}
                   </Typography>
 
                   <Typography>
@@ -103,11 +132,11 @@ export const InventAdmin = () => {
                   </Typography>
 
                   <Typography>
-                    Stock: {data.cantidad}
+                    Stock: {data.stock}
                   </Typography>
 
                   <Typography>
-                    Precio compra: {data.precioCompra}
+                    Precio compra: {data.preciocompra}
                   </Typography>
 
                   <Typography>
@@ -125,66 +154,215 @@ export const InventAdmin = () => {
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={open}
       >
-        <></>
-        <Grid container wrap="nowrap" justifyContent="flex-end" sx={{ borderRadius: 2, height: '50%', width: '50%', backgroundColor: '#DFDFDF' }}>
+        <Grid container wrap="nowrap" justifyContent="flex-end" sx={{ borderRadius: 2, height: '50%', width: '50%', backgroundColor: '#424444' }}>
+          {modificar ? (
 
-          <Grid spacing={2} sx={{ height: '90%', width: '90%', mt: 3 }}>
-            <CardMedia
-              component="img"
-              sx={{ width: 151 }}
-              height="140"
-              image={`${process.env.REACT_APP_IMAGE_LINK}`}
-              alt={selection?.imagen}
-            />
+            <Grid container wrap="nowrap" direction="column" justifyContent="center" spacing={5} sx={{ height: '90%', width: '90%', mt: 3, ml: '35%' }}>
 
-            <CardContent>
-              <Typography>
-                Nombre: {selection?.nombre}
-              </Typography>
+              <TextField
+                variant="filled"
+                placeholder="Nombre del Producto"
+                label="Nombre Producto"
+                defaultValue={selection?.nombre}
+                sx={{
+                  display: "block",
+                  margin: ".10rem 0",
+                }}
+                name="nombre"
+                onChange={modificarProducto}
+                inputProps={{ style: { color: "white" } }}
+                InputLabelProps={{ style: { color: "white" } }}
 
-              <Typography>
-                Precio Venta: {selection?.precioVenta}
-              </Typography>
+              />
 
-              <Typography>
-                Categoria: {selection?.categoria}
-              </Typography>
+              <TextField
+                variant="filled"
+                placeholder="Precio venta"
+                label="Precio venta"
+                defaultValue={selection?.precioventa}
+                sx={{
+                  display: "block",
+                  margin: ".10rem 0",
+                }}
+                type="number"
+                name="precioventa"
+                onChange={modificarProducto}
+                inputProps={{ style: { color: "white" } }}
+                InputLabelProps={{ style: { color: "white" } }}
 
-              <Typography>
-                Distribuidor: {selection?.distribuidor}
-              </Typography>
+              />
 
-              <Typography>
-                Stock: {selection?.cantidad}
-              </Typography>
+              <TextField
+                variant="filled"
+                placeholder="Categoria"
+                label="Categoria"
+                defaultValue={selection?.categoria}
+                sx={{
+                  display: "block",
+                  margin: ".10rem 0",
+                }}
+                name="categoria"
+                onChange={modificarProducto}
+                inputProps={{ style: { color: "white" } }}
+                InputLabelProps={{ style: { color: "white" } }}
 
-              <Typography>
-                Precio compra: {selection?.precioCompra}
-              </Typography>
+              />
 
-              <Typography>
-                Descripcion: {selection?.detalle}
-              </Typography>
-            </CardContent>
-            <Button
-              onClick={ () => { 
-                BorrarProducto(selection?.id)
-                handleClose()
-               }}
-              variant="contained"
-              color="error"
-            >
-              Borrar
-            </Button>
-            <Button
-              onClick={() => {console.log('Se Modifica: ', selection.nombre)}}
-              variant="contained"
-              color="warning"
-              sx={{ ml: 5 }}
-            >
-              Modificar
-            </Button>
-          </Grid>
+              <TextField
+                variant="filled"
+                label="Distribuidor "
+                placeholder="Distribuidora"
+                defaultValue={selection?.distribuidor}
+                sx={{
+                  display: "block",
+                  margin: ".10rem 0",
+                }}
+                name="distribuidor"
+                onChange={modificarProducto}
+                inputProps={{ style: { color: "white" } }}
+                InputLabelProps={{ style: { color: "white" } }}
+
+              />
+
+              <TextField
+                variant="filled"
+                label="Cantidad de productos"
+                placeholder="Stock"
+                defaultValue={selection?.stock}
+                type="number"
+                sx={{
+                  display: "block",
+                  margin: ".10rem 0",
+                }}
+                name="stock"
+                onChange={modificarProducto}
+                inputProps={{ style: { color: "white" } }}
+                InputLabelProps={{ style: { color: "white" } }}
+
+              />
+
+              <TextField
+                variant="filled"
+                label="Precio de compra"
+                placeholder="Precio de compra"
+                defaultValue={selection?.preciocompra}
+                type="number"
+                sx={{
+                  display: "block",
+                  margin: ".10rem 0",
+                }}
+                name="preciocompra"
+                onChange={modificarProducto}
+                inputProps={{ style: { color: "white" } }}
+                InputLabelProps={{ style: { color: "white" } }}
+
+              />
+
+              <TextField
+                variant="filled"
+                label="Descripcion del Producto"
+                placeholder="Detalles"
+                defaultValue={selection?.detalle}
+                sx={{
+                  display: "block",
+                  margin: ".10rem 0",
+                }}
+                name="detalle"
+                onChange={modificarProducto}
+                inputProps={{ style: { color: "white" } }}
+                InputLabelProps={{ style: { color: "white" } }}
+
+              />
+
+              <Button
+                onClick={enviarModificacion}
+                variant="contained"
+                color="primary"
+                type="submit"
+                sx={{
+                  ml: 0,
+                  mt: 1,
+                  height: '90%',
+                  width: 210
+                }}
+                disabled={
+                  !producto.nombre ||
+                  !producto.precioventa ||
+                  !producto.categoria ||
+                  !producto.distribuidor ||
+                  !producto.stock ||
+                  !producto.preciocompra ||
+                  !producto.detalle
+                }
+              >
+                Guardar Cambios
+              </Button>
+
+            </Grid>
+
+          ) : (
+            <Grid container justifyContent="center" direction="column" spacing={2} sx={{ height: '100%', width: '100%', mt: 3, ml: '30%' }}>
+              <CardMedia
+                component="img"
+                sx={{ width: 151 }}
+                height="140"
+                image={`${process.env.REACT_APP_IMAGE_LINK}`}
+                alt={selection?.imagen}
+              />
+
+              <CardContent>
+                <Typography>
+                  Nombre: {selection?.nombre}
+                </Typography>
+
+                <Typography>
+                  Precio Venta: {selection?.precioventa}
+                </Typography>
+
+                <Typography>
+                  Categoria: {selection?.categoria}
+                </Typography>
+
+                <Typography>
+                  Distribuidor: {selection?.distribuidor}
+                </Typography>
+
+                <Typography>
+                  Stock: {selection?.stock}
+                </Typography>
+
+                <Typography>
+                  Precio compra: {selection?.preciocompra}
+                </Typography>
+
+                <Typography>
+                  Descripcion: {selection?.detalle}
+                </Typography>
+              </CardContent>
+              <Grid>
+                <Button
+                  onClick={() => {
+                    BorrarProducto(selection?.id)
+                    handleClose()
+                  }}
+                  variant="contained"
+                  color="error"
+                  sx={{ height: 40, width: 100 }}
+                >
+                  Borrar
+                </Button>
+                <Button
+                  onClick={() => handleModify(selection)}
+                  variant="contained"
+                  color="warning"
+                  sx={{ ml: 5, height: 40, width: 100 }}
+                >
+                  Modificar
+                </Button>
+              </Grid>
+            </Grid>
+          )}
+
 
 
           <Grid sx={{ position: "flex", top: '50%', right: '50%', zIndex: 2000, height: 50, width: 50, mt: 3, mr: 3 }}>

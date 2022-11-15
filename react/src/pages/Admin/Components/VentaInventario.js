@@ -153,7 +153,7 @@ export const VentaInventario = () => {
 
   // Enviar Compra
   const finalizarCompra = index => {
-    console.log('En proceso: Compra Finalizada')
+    alert('En proceso: Venta Finalizada')
   }
 
   const filterOptions = createFilterOptions({
