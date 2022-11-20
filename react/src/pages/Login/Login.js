@@ -98,6 +98,7 @@ export const Login = () => {
                                     <TextField
                                         variant='outlined'
                                         label='Clave '
+                                        type="password"
                                         sx={{
                                             display: 'block',
                                             margin: '1rem 0'
