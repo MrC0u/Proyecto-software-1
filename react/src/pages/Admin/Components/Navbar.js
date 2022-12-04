@@ -7,15 +7,18 @@ export default function Navbar() {
   const navigate = useNavigate();
 
   return (
-    <AppBar position='static' >
+    <AppBar position='static'>
       <Container maxWidth="2">
         <Toolbar disableGutters>
-          <Typography variant='h6' sx={{ flexGrow: 1 }}>
+          <Typography variant='h6' sx={{ flexGrow: 1 }} >
             <Link to='' style={{ textDecoration: 'none', color: '#eee' }}> Inicio </Link>
           </Typography>
-          <Stack direction="row" spacing={2}>
-            <Button variant='contained' onClick={() => navigate(`/admin/venta`)}>
+          <Stack direction="row" spacing={2} >
+            <Button variant='contained'  onClick={() => navigate(`/admin/venta`)}>
               Venta
+            </Button>
+            <Button variant='contained' onClick={() => navigate(`/admin/compra`)}>
+              Compra
             </Button>
             <Button variant='contained' color='primary' onClick={() => navigate(`inventario`)}>
               Inventario
@@ -32,3 +35,5 @@ export default function Navbar() {
     </AppBar>
   )
 }
+
+

@@ -7,6 +7,7 @@ import { Container } from '@mui/material';
 import { InventAdmin } from "./Components/InventAdmin";
 import {ProductoForm} from "./Components/ProductoForm";
 import {VentaInventario} from "./Components/VentaInventario";
+import {CompraInventario} from "./Components/CompraInventario.js";
 import {ModificarInventarioAdm} from "./Components/ModificarInventarioAdm";
 
 
@@ -24,6 +25,7 @@ export const Admin = () => {
                     <Route path='inventario' element={<InventAdmin/>}/>
                     <Route path='addProducto' element={<ProductoForm/>}/>   
                     <Route path='venta' element={<VentaInventario/>}/>
+                    <Route path='compra' element={<CompraInventario/>}/>
                     <Route path='ModificarProducto' element={<ModificarInventarioAdm idProducto={params.id}/>}/>                
                 </Routes>
         </Container>
