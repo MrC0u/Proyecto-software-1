@@ -38,7 +38,7 @@ function onlyUnique(value, index, self) {
   
   }
   
-  export const CompraInventario = () => {
+  export const CompraInventario = ({idUser}) => {
   
     let marginLeft = 10;
     const [busqueda, setBusqueda] = useState([]);
