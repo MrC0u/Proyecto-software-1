@@ -8,10 +8,10 @@ export default function Navbar({idUser}) {
   console.log(idUser)
 
   return (
-    <AppBar position='static' >
+    <AppBar position='static'>
       <Container maxWidth="2">
         <Toolbar disableGutters>
-          <Typography variant='h6' sx={{ flexGrow: 1 }}>
+          <Typography variant='h6' sx={{ flexGrow: 1 }} >
             <Link to='' style={{ textDecoration: 'none', color: '#eee' }}> Inicio </Link>
           </Typography>
           <Stack direction="row" spacing={2}>
@@ -33,3 +33,5 @@ export default function Navbar({idUser}) {
     </AppBar>
   )
 }
+
+
