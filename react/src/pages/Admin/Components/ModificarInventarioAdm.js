@@ -2,7 +2,7 @@ import {Card, CardContent, Grid, Typography, TextField, Button, CircularProgress
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 
-export const ModificarInventarioAdm = () => {
+export const ModificarInventarioAdm = ({idUser}) => {
 
     const [file,setFile] = useState(null)
   const [producto, setProducto] = useState({
@@ -70,7 +70,7 @@ export const ModificarInventarioAdm = () => {
     const data= await res.json();
     console.log(data)
     setLoading(false);
-    navigate("/admin/inventario")
+    navigate(`/admin/${idUser}/inventario`)
     
   }
 

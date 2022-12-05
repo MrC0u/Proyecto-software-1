@@ -2,9 +2,10 @@ import { AppBar, Box, Button, Container, Toolbar, Typography, Stack } from '@mui
 import { Link, useNavigate } from 'react-router-dom';
 import React from 'react';
 
-export default function Navbar() {
+export default function Navbar({idUser}) {
 
   const navigate = useNavigate();
+  console.log(idUser)
 
   return (
     <AppBar position='static' >
@@ -14,13 +15,13 @@ export default function Navbar() {
             <Link to='' style={{ textDecoration: 'none', color: '#eee' }}> Inicio </Link>
           </Typography>
           <Stack direction="row" spacing={2}>
-            <Button variant='contained' onClick={() => navigate(`/admin/venta`)}>
+            <Button variant='contained' onClick={() => navigate(`/admin/${idUser}/venta`)}>
               Venta
             </Button>
-            <Button variant='contained' color='primary' onClick={() => navigate(`inventario`)}>
+            <Button variant='contained' color='primary' onClick={() => navigate(`/admin/${idUser}/inventario`)}>
               Inventario
             </Button>
-            <Button variant='contained' color='primary' onClick={() => navigate('listVendedores')}>
+            <Button variant='contained' color='primary' onClick={() => navigate(`/admin/${idUser}/listVendedores`)}>
               Vendedores
             </Button>
             <Button variant='contained' color='error' onClick={() => navigate(`/`)}>

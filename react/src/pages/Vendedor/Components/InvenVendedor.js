@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Grid, Card, CardContent, CardMedia, Typography, CardActionArea, Button, Backdrop, ClickAwayListener, Box } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-
+import { Grid, Card, CardContent, CardMedia, Typography} from '@mui/material';
 
 
 export const InventVendedor = () => {
@@ -67,7 +65,7 @@ export const InventVendedor = () => {
                             <CardMedia
                                 component="img"
                                 height="160"
-                                image={`${process.env.REACT_APP_IMAGE_LINK}`}
+                                image={`${data?.imagen === '' ? process.env.REACT_APP_IMAGE_LINK : data?.imagen}`}
                                 alt={data.imagen}
                             />
 

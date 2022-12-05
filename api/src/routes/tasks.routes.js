@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const { getVendedores, create, deleteVendedor, login, userLevel, getId, 
     cambioClave, createProducto, getProductos, getCategorias, addImages, 
-    deleteProducto, getProducto, modifyProduct } = require('../controllers/tasks.controller');
+    deleteProducto, getProducto, modifyProduct, addVenta } = require('../controllers/tasks.controller');
 
 const router = Router();
 
@@ -37,8 +37,12 @@ router.post('/modificarProducto', modifyProduct);
 
 router.get('/categorias',getCategorias);
 
-router.post('/images/post',addImages)
+router.post('/images/post',addImages);
 
-router.delete('/deleteProducto/:id', deleteProducto)
+router.post('/addVenta',addVenta);
+
+router.delete('/deleteProducto/:id', deleteProducto);
+
+
 
 module.exports = router;

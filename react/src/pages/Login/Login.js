@@ -43,17 +43,16 @@ export const Login = () => {
                 });
                 const data = await response.json();
 
-                if (data[0].codigo === 1) {
-                    Navigate("/admin");
-                } else {
-
-
-                    const response = await fetch(`http://${process.env.REACT_APP_IP}:4000/getId/${datos.usuario}`, {
+                var usr_id_response = await fetch(`http://${process.env.REACT_APP_IP}:4000/getId/${datos.usuario}`, {
                         method: 'GET',
                     });
-                    const data = await response.json();
+                const usr_id = await usr_id_response.json();
 
-                    Navigate(`/vendedor/${data[0].id}`);
+                if (data[0].codigo === 1) {
+                    Navigate(`/admin/${usr_id[0].id}`);
+                } else {
+
+                    Navigate(`/vendedor/${usr_id[0].id}`);
                 }
 
             } else {

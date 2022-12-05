@@ -2,7 +2,7 @@ import {Card, CardContent, Grid, Typography, TextField, Button, CircularProgress
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 
-export default function VendorForm() {
+export default function VendorForm({idUser}) {
 
   const [vendedor, setVendedor] = useState({
     nombre:'',

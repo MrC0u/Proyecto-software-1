@@ -8,6 +8,7 @@ import { InventAdmin } from "./Components/InventAdmin";
 import {ProductoForm} from "./Components/ProductoForm";
 import {VentaInventario} from "./Components/VentaInventario";
 import {ModificarInventarioAdm} from "./Components/ModificarInventarioAdm";
+import {Redirect} from "./Components/Redirect";
 
 
 export const Admin = () => {
@@ -16,15 +17,16 @@ export const Admin = () => {
 
     return(
         <Container maxWidth={false}>
-            <Navbar/>
+            <Navbar idUser={params.id}/>
                 <Routes>
                     <Route path='/' element={<div><h1>Soy Admin</h1></div>}/>
-                    <Route path='listVendedores' element={<VendorList />} />
-                    <Route path='addVendedores' element={<VendorForm />} />
-                    <Route path='inventario' element={<InventAdmin/>}/>
-                    <Route path='addProducto' element={<ProductoForm/>}/>   
-                    <Route path='venta' element={<VentaInventario/>}/>
-                    <Route path='ModificarProducto' element={<ModificarInventarioAdm idProducto={params.id}/>}/>                
+                    <Route path='/listVendedores' element={<VendorList idUser = {params.id}/>} />
+                    <Route path='/addVendedores' element={<VendorForm idUser = {params.id}/>} />
+                    <Route path='/inventario' element={<InventAdmin idUser = {params.id}/>}/>
+                    <Route path='/addProducto' element={<ProductoForm idUser = {params.id}/>}/>   
+                    <Route path='/venta' element={<VentaInventario idUser = {params.id}/>}/>
+                    <Route path='/redirect' element={<Redirect idUser = {params.id}/>}/>
+                    <Route path='/ModificarProducto' element={<ModificarInventarioAdm idUser = {params.id}/>}/>                
                 </Routes>
         </Container>
     )

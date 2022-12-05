@@ -5,7 +5,7 @@ import CloseIcon from '@mui/icons-material/Close';
 
 
 
-export const InventAdmin = () => {
+export const InventAdmin = ({idUser}) => {
   //BASE DE DATOS FICTICIA
   //const inv= inventario;
   const navigate = useNavigate();
@@ -31,7 +31,8 @@ export const InventAdmin = () => {
     distribuidor: '',
     stock: 0,
     preciocompra: 0,
-    detalle: ''
+    detalle: '',
+    imagen: ''
   })
 
   const handleClose = () => {
@@ -91,7 +92,7 @@ export const InventAdmin = () => {
           <Button
             variant="contained"
             color="success"
-            onClick={() => navigate("/admin/addProducto")}
+            onClick={() => navigate(`/admin/${idUser}/addProducto`)}
             sx={{ minHeight: 50, minWidth: 100 }}
           >
             Agregar
@@ -110,7 +111,7 @@ export const InventAdmin = () => {
                 <CardMedia
                   component="img"
                   height="160"
-                  image={`${process.env.REACT_APP_IMAGE_LINK}`}
+                  image={`${data.imagen === '' ? process.env.REACT_APP_IMAGE_LINK : data.imagen}`}
                   alt={data.imagen}
                 />
 
@@ -142,6 +143,8 @@ export const InventAdmin = () => {
                   <Typography>
                     Descripcion: {data.detalle}
                   </Typography>
+
+                  
                 </CardContent>
               </CardActionArea>
             </Card>
@@ -154,7 +157,7 @@ export const InventAdmin = () => {
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={open}
       >
-        <Grid container wrap="nowrap" justifyContent="flex-end" sx={{ borderRadius: 2, height: '50%', width: '50%', backgroundColor: '#424444' }}>
+        <Grid container wrap="nowrap" justifyContent="flex-end" sx={{ borderRadius: 2, height: '60%', width: '50%', backgroundColor: '#424444' }}>
           {modificar ? (
 
             <Grid container wrap="nowrap" direction="column" justifyContent="center" spacing={5} sx={{ height: '90%', width: '90%', mt: 3, ml: '35%' }}>
@@ -274,6 +277,22 @@ export const InventAdmin = () => {
 
               />
 
+              <TextField
+                variant="filled"
+                label="Imagen"
+                placeholder="URL"
+                defaultValue={selection?.imagen}
+                sx={{
+                  display: "block",
+                  margin: ".10rem 0",
+                }}
+                name="imdagen"
+                onChange={modificarProducto}
+                inputProps={{ style: { color: "white" } }}
+                InputLabelProps={{ style: { color: "white" } }}
+
+              />
+
               <Button
                 onClick={enviarModificacion}
                 variant="contained"
@@ -292,7 +311,8 @@ export const InventAdmin = () => {
                   !producto.distribuidor ||
                   !producto.stock ||
                   !producto.preciocompra ||
-                  !producto.detalle
+                  !producto.detalle ||
+                  !producto.imagen
                 }
               >
                 Guardar Cambios
@@ -306,7 +326,7 @@ export const InventAdmin = () => {
                 component="img"
                 sx={{ width: 151 }}
                 height="140"
-                image={`${process.env.REACT_APP_IMAGE_LINK}`}
+                image={`${selection?.imagen === '' ? process.env.REACT_APP_IMAGE_LINK : selection?.imagen}`}
                 alt={selection?.imagen}
               />
 
@@ -338,6 +358,7 @@ export const InventAdmin = () => {
                 <Typography>
                   Descripcion: {selection?.detalle}
                 </Typography>
+
               </CardContent>
               <Grid>
                 <Button

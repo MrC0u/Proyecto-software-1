@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import {
-  TextField, Autocomplete, Typography, createFilterOptions, Box, Container, Grid, Item, Card,
+  TextField, Autocomplete, Typography, createFilterOptions, Grid, Card,
   CardContent, CardMedia, CardActions, Button, TableContainer, Paper, Table, TableHead, TableCell, TableRow,
-  Badge, ButtonGroup, TableBody, chipClasses
+  Badge, ButtonGroup, TableBody
 } from '@mui/material'
 import { useNavigate } from 'react-router-dom';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -33,21 +33,7 @@ function removeArray(array, value) {
   return array
 }
 
-function getStock(name) {
-
-}
-
-export const VentaInventario = () => {
-
-  let marginLeft = 10;
-  const [busqueda, setBusqueda] = useState([]);
-  const [carro, setCarro] = useState([]);
-  const [cantidad, setCantidad] = useState([]);
-  const [precio, setPrecio] = useState([]);
-  const [selectCantidad, setSelectCantidad] = useState([1, 1, 1]);
-
-  const navigate = useNavigate();
-
+export const VentaInventario = ({idUser}) => {
 
   const [productos, setProductos] = useState([]);
 
@@ -55,8 +41,17 @@ export const VentaInventario = () => {
     const response = await fetch(`http://${process.env.REACT_APP_IP}:4000/productos`);
     const data = await response.json();
     setProductos(data);
-    setBusqueda(busqueda.concat(["Coca-Cola"]));
   }
+
+  let marginLeft = 10;
+  const [busqueda, setBusqueda] = useState([]);
+  const [carro, setCarro] = useState([]);
+  const [cantidad, setCantidad] = useState([]);
+  const [id_carro, setId_carro] = useState([]);
+  const [precio, setPrecio] = useState([]);
+  const [selectCantidad, setSelectCantidad] = useState([1, 1, 1]);
+
+  const navigate = useNavigate();
 
   // Buscador
   const handleChange = search => {
@@ -96,13 +91,15 @@ export const VentaInventario = () => {
     var index = carro.indexOf(element)
     var cantidadCompra = selectCantidad[busqueda.indexOf(element)]
     var producto = productos.find(({ nombre }) => nombre === element)
-
+    var id = 0;
     if (cantidadCompra > 0) {
       // No existe en el Carro
-      if (index == -1) {
+      if (index === -1) {
         setCarro(carro.concat(element))
         setCantidad(cantidad.concat(cantidadCompra))
         setPrecio(precio.concat((cantidadCompra) * (producto.precioventa)))
+        setId_carro(id_carro.concat(producto.id))
+        console.log(producto.id)
       } else {
         // Existe en el Carro
         cantidad[index] += cantidadCompra
@@ -126,12 +123,29 @@ export const VentaInventario = () => {
     setPrecio(precio.splice(index, 1))
     setCantidad(cantidad.splice(index, 1))
     setCarro(carro.splice(index, 1))
+    setId_carro(id_carro.splice(index,1))
     selectCantidad[busqueda.indexOf(name)] = 1
     setSelectCantidad([...selectCantidad])
     setPrecio([...precio])
     setCantidad([...cantidad])
     setCarro([...carro])
     setProductos([...productos])
+    setId_carro([...id_carro])
+  }
+
+  const LimpiarCarro = index => {
+    var name = carro[index]
+    setPrecio(precio.splice(index, 1))
+    setCantidad(cantidad.splice(index, 1))
+    setCarro(carro.splice(index, 1))
+    setId_carro(id_carro.splice(index,1))
+    selectCantidad[busqueda.indexOf(name)] = 1
+    setSelectCantidad([...selectCantidad])
+    setPrecio([...precio])
+    setCantidad([...cantidad])
+    setCarro([...carro])
+    setProductos([...productos])
+    setId_carro([...id_carro])
   }
 
   // Aumentar Cantidad de producto
@@ -152,19 +166,54 @@ export const VentaInventario = () => {
   }
 
   // Enviar Compra
-  const finalizarCompra = index => {
-    alert('En proceso: Venta Finalizada')
+  const finalizarCompra = async (index) => {
+    let venta = []
+    venta.push(["Id_Empleado",parseInt(idUser),0])
+    if(carro.length === 0){
+      alert('El Carro esta vacio.')
+    }else{
+      for (var i = 0; i < carro.length ;i++) {
+        //console.log(carro[i])
+        //console.log(cantidad[i])
+        venta.push([carro[i],cantidad[i],id_carro[i]])
+        //console.log(venta[i])
+      }
+      //console.log(venta)
+      venta = JSON.stringify(venta)
+    }
+
+    //console.log(venta)
+    
+    try {
+      
+      const res = await fetch(`http://${process.env.REACT_APP_IP}:4000/addVenta`,{
+        method:'POST',
+        body: venta,
+        headers: {"Content-Type": "application/json" },
+    });
+
+    } catch (error) {
+      console.log(error)
+    }
+    
+    for( let i in carro){
+      LimpiarCarro(i);
+    }
+
+    navigate('./../redirect');
+
   }
 
   const filterOptions = createFilterOptions({
     limit: 5,
   });
-
+  
   useEffect(() => {
     loadProducts();
   }, []
   )
 
+  
   // Render
   return (
     <div>
@@ -205,7 +254,7 @@ export const VentaInventario = () => {
                 <CardMedia
                   component="img"
                   height="300"
-                  image={`${process.env.REACT_APP_IMAGE_LINK}`}
+                  image={`${productos.find(({ nombre }) => nombre === elemento)?.imagen === '' ? process.env.REACT_APP_IMAGE_LINK : productos.find(({ nombre }) => nombre === elemento)?.imagen}`}
                 />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">

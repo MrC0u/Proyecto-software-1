@@ -10,7 +10,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 
-export const ProductoForm = () => {
+export const ProductoForm = ({idUser}) => {
 
   const [producto, setProducto] = useState({
     nombre: '',
@@ -43,7 +43,7 @@ export const ProductoForm = () => {
       return
     }
     const formData = new FormData()
-    formData.append('image', file)
+    //formData.append('image', file)
     formData.append('nombre', producto.nombre)
     console.log(producto.nombre)
     console.log(formData)
@@ -52,7 +52,7 @@ export const ProductoForm = () => {
       body: formData
     }).then((resp) => {
       resp.json().then((result) => {
-        console.log("Resultado: ", result)
+        //console.log("Resultado: ", result)
       })
     }).catch(err => {
         console.error(err)
@@ -79,9 +79,9 @@ export const ProductoForm = () => {
       headers: { "Content-Type": "application/json" },
     });
     const data = await res.json();
-    console.log(data)
+    //console.log(data)
     setLoading(false);
-    navigate("/admin/inventario")
+    navigate(`/admin/${idUser}/inventario`)
 
   }
 
@@ -217,7 +217,23 @@ export const ProductoForm = () => {
 
               />
 
-              {<TextField
+              <TextField
+                variant="filled"
+                label="Imagen"
+                placeholder="URL"
+                sx={{
+                  display: "block",
+                  margin: ".10rem 0",
+                  width: '100%'
+                }}
+                name="imagen"
+                onChange={handleChange}
+                inputProps={{ style: { color: "white" } }}
+                InputLabelProps={{ style: { color: "white" } }}
+
+              />
+
+              {/* {<TextField
                 // Subida Imagen
 
                 //variant="filled"
@@ -233,7 +249,7 @@ export const ProductoForm = () => {
                 inputProps={{ style: { color: "white" } }}
                 InputLabelProps={{ style: { color: "white" } }}
                 focused
-              />}
+              />} */}
 
 
               <Button
@@ -250,7 +266,8 @@ export const ProductoForm = () => {
                   !producto.distribuidor ||
                   !producto.stock ||
                   !producto.precioCompra ||
-                  !producto.detalle
+                  !producto.detalle ||
+                  !producto.imagen
                 }
               >
                 {loading ? (

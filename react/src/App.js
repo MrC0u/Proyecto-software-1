@@ -11,7 +11,7 @@ export default function App() {
           <Container maxWidth={false}>
             <Routes>
               <Route path="/" element={<Login/>}/>
-              <Route path="/admin/*" element={<Admin/>}/>
+              <Route path="/admin/:id/*" element={<Admin/>}/>
               <Route path="/vendedor/:id/*" element={<Vendedor/>}/>
             </Routes>
           </Container>

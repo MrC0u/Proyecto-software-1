@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 import { Button, Card, CardContent, Typography, Stack } from '@mui/material';
 import {useNavigate} from 'react-router-dom';
 
-export default function VendorList() {
+export default function VendorList({idUser}) {
 
   const navigate = useNavigate();
 
