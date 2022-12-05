@@ -168,6 +168,12 @@ const addImages = async (req, res) => {
     console.log('a')
 }
 
+const getMasVendido = async (req, res) => {
+    const result = await pool.query('select nombre, sum(cantidad) from ventas group by nombre having sum(cantidad) = ( select sum(cantidad) from ventas group by nombre order by sum(cantidad) desc limit 1 )');
+    console.log(result.rows)
+    res.json(result.rows)
+}
+
 const addVenta = async (req, res) => {
 
 
@@ -250,5 +256,6 @@ module.exports = {
     addImages,
     deleteProducto,
     modifyProduct,
-    addVenta
+    addVenta,
+    getMasVendido
 }

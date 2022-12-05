@@ -5,7 +5,6 @@ import React from 'react';
 export default function Navbar({idUser}) {
 
   const navigate = useNavigate();
-  console.log(idUser)
 
   return (
     <AppBar position='static'>

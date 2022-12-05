@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const { getVendedores, create, deleteVendedor, login, userLevel, getId, 
     cambioClave, createProducto, getProductos, getCategorias, addImages, 
-    deleteProducto, getProducto, modifyProduct, addVenta } = require('../controllers/tasks.controller');
+    deleteProducto, getProducto, modifyProduct, addVenta, getMasVendido } = require('../controllers/tasks.controller');
 
 const router = Router();
 
@@ -42,6 +42,8 @@ router.post('/images/post',addImages);
 router.post('/addVenta',addVenta);
 
 router.delete('/deleteProducto/:id', deleteProducto);
+
+router.get('/mostSold',getMasVendido);
 
 
 
