@@ -17,3 +17,6 @@ INSERT INTO inventario(Id, Nombre, PrecioVenta, Categoria, Distribuidor, Stock, 
 CREATE TABLE Ventas(Id SERIAL, Id_Producto int,Nombre VARCHAR(200),Cantidad int, Id_Empleado int);
 INSERT INTO Ventas(Id, Id_Producto, Nombre, Cantidad, Id_Empleado) VALUES (default, 1, 'Coca-Cola', 0, 1);
 
+CREATE TABLE Compras(Id SERIAL, Id_Producto int,Nombre VARCHAR(200),Cantidad int, Id_Proveedor int);
+INSERT INTO Ventas(Id, Id_Producto, Nombre, Cantidad, Id_Proveedor) VALUES (default, 1, 'Coca-Cola', 0, 1);
+
