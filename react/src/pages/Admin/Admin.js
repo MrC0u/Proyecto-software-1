@@ -41,10 +41,11 @@ export const Admin = () => {
             <Navbar idUser={params.id} />
             <Routes>
                 <Route path='/' element={<div>
-                    <Typography sx={{ ml: 5, mt: 5 }} gutterBottom variant="h4" component="div">
-                        Soy Admin
-                    </Typography>
-
+                    <Grid container sx={{ alignItems: "center", justifyContent: 'center', backgroundColor: '#424444', ml: 5, mt: 5, width: 500, height: 80, borderRadius: 2 }} >
+                        <Typography sx={{ ml: 0, mt: 1 }} gutterBottom variant="h4" component="div">
+                            Bienvenido Administrador
+                        </Typography>
+                    </Grid>
 
                     <Grid container sx={{ borderRadius: 2, width: 500, height: 200, mt: 5, ml: 5, backgroundColor: '#424444' }}>
                         <Grid container sx={{ borderRadius: 3, backgroundColor: '#424444' }}>
@@ -57,7 +58,7 @@ export const Admin = () => {
                                 mostSold.map(data => (
                                     <CardContent>
                                         <Typography sx={{ ml: 0, mt: 0, width: 500, height: 2 }} gutterBottom variant="h7" component="div">
-                                            {data.sum==0?"No Existe":(data.nombre + " ")}
+                                            {data.sum == 0 ? "No Existe" : (data.nombre + " ")}
                                         </Typography>
                                     </CardContent>
                                 ))

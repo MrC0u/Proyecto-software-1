@@ -223,7 +223,7 @@ function onlyUnique(value, index, self) {
           options={
             ((productos.map(object => object.categoria)).concat(productos.map(object => object.nombre))).filter(onlyUnique)
           }
-          sx={{ width: 700, mt: 4, ml: marginLeft, backgroundColor: '#DFDFDF', borderRadius: 2 }}
+          sx={{ width: 700, mt: 4, ml: marginLeft}}
           renderInput={(params) => (
             <TextField
               onChange={(event) => {

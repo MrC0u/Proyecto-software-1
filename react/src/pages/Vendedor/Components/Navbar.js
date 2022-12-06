@@ -19,7 +19,7 @@ export default function Navbar({idUser}) {
                 <Button variant='contained' color='success'  onClick={() => navigate(`/vendedor/${idUser}/venta`)}>
                     Venta
                 </Button>
-                <Button variant='contained' color='secondary'  onClick={() => navigate(`/vendedor/${idUser}/inventario`)}>
+                <Button variant='contained' color='primary'  onClick={() => navigate(`/vendedor/${idUser}/inventario`)}>
                     Inventario
                 </Button>
               </Stack>

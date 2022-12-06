@@ -229,7 +229,7 @@ export const VentaInventario = ({idUser}) => {
             options={
               ((productos.map(object => object.categoria)).concat(productos.map(object => object.nombre))).filter(onlyUnique)
             }
-            sx={{ width:700, mt: 4, ml: marginLeft, backgroundColor: '#DFDFDF', borderRadius: 2}}
+            sx={{ width:700, mt: 4, ml: marginLeft}}
             renderInput={(params) => (
               <TextField
                 onChange={(event) => {
@@ -361,7 +361,7 @@ export const VentaInventario = ({idUser}) => {
         </Button>
 
         {/* ---------------- Precio Total ---------------- */}
-        <Card sx={{ width: 400, height: 100, mt: 2, ml: 5, backgroundColor: "#C44536" }}>
+        <Card sx={{ width: 400, height: 100, mt: 2, ml: 5, backgroundColor: "#1c1c1c" }}>
           <CardContent >
             <Typography variant="h4" color="white" >
               Total: $ {numberWithCommas(precio.reduce((previousValue, currentValue) => previousValue + currentValue, 0))}

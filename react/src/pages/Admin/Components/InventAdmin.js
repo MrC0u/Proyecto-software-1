@@ -5,7 +5,7 @@ import CloseIcon from '@mui/icons-material/Close';
 
 
 
-export const InventAdmin = ({idUser}) => {
+export const InventAdmin = ({ idUser }) => {
   //BASE DE DATOS FICTICIA
   //const inv= inventario;
   const navigate = useNavigate();
@@ -57,8 +57,8 @@ export const InventAdmin = ({idUser}) => {
     const res = await fetch(`http://${process.env.REACT_APP_IP}:4000/modificarProducto`, {
       method: 'POST',
       body: JSON.stringify(producto),
-      headers: {"Content-Type": "application/json" },
-  });
+      headers: { "Content-Type": "application/json" },
+    });
     const data = await res.json();
     handleClose()
     loadProductos()
@@ -82,18 +82,21 @@ export const InventAdmin = ({idUser}) => {
     <div>
       <Grid container justifyContent="space-between" alignItems="center" sx={{ borderRadius: 2, mt: 1, /*backgroundColor: 'black'*/ }}>
 
-        <Grid sx={{ ml: 5 }}>
-          <Typography>
-            <h1>Inventario Admin</h1>
-          </Typography>
+        <Grid sx={{ ml: 0 }}>
+          <Grid container sx={{ alignItems: "center", justifyContent: 'center', backgroundColor: '#424444', ml: 0, mt: 3, width: 400, height: 70, borderRadius: 2 }} >
+            <Typography variant="h4">
+              Inventario
+            </Typography>
+          </Grid>
         </Grid>
 
-        <Grid sx={{ minHeight: '46px', minWidth: '46px', mr: 5 }}>
+        <Grid sx={{ mr: 5 }}>
           <Button
             variant="contained"
             color="success"
+            size="large"
             onClick={() => navigate(`/admin/${idUser}/addProducto`)}
-            sx={{ minHeight: 50, minWidth: 100 }}
+            sx={{ height: 60, width: 200,mt: 3 }}
           >
             Agregar
           </Button>
@@ -144,7 +147,7 @@ export const InventAdmin = ({idUser}) => {
                     Descripcion: {data.detalle}
                   </Typography>
 
-                  
+
                 </CardContent>
               </CardActionArea>
             </Card>

@@ -14,10 +14,10 @@ export default function Navbar({idUser}) {
             <Link to='' style={{ textDecoration: 'none', color: '#eee' }}> Inicio </Link>
           </Typography>
           <Stack direction="row" spacing={2}>
-            <Button variant='contained' onClick={() => navigate(`/admin/${idUser}/venta`)}>
+            <Button variant='contained' color='success' onClick={() => navigate(`/admin/${idUser}/venta`)}>
               Venta
             </Button>
-            <Button variant='contained' onClick={() => navigate(`/admin/${idUser}/compra`)}>
+            <Button variant='contained' color='success' onClick={() => navigate(`/admin/${idUser}/compra`)}>
               Compra
             </Button>
             <Button variant='contained' color='primary' onClick={() => navigate(`/admin/${idUser}/inventario`)}>

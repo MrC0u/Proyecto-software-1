@@ -9,9 +9,8 @@ import { Redirect } from "./Components/Redirect";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
-import { withStyles } from "@material-ui/core/styles";
 import {
-    TextField, Autocomplete, Typography, createFilterOptions, Grid, Card,
+    TextField, Autocomplete, Typography, createFilterOptions, Grid, Card, Box,
     CardContent, CardMedia, CardActions, Button, TableContainer, Paper, Table, TableHead, TableCell, TableRow,
     Badge, ButtonGroup, TableBody
 } from '@mui/material'
@@ -35,12 +34,6 @@ export const Vendedor = ({ }) => {
         usuario: ''
     })
 
-    const WhiteTextTypography = withStyles({
-        root: {
-          color: "#FFFFFF"
-        }
-      })(Typography);
-      
     const onLoad = async () => {
         const response = await fetch(`http://${process.env.REACT_APP_IP}:4000/vendedor`, {
             method: 'POST',
@@ -92,9 +85,11 @@ export const Vendedor = ({ }) => {
                 <Route path='/' element={
                     <div>
                         <Grid sx={{ ml: 10 }}>
-                            <Typography sx={{ ml: 5, mt: 5, mb: 10, width: 500, height: 2 }} gutterBottom variant="h3" component="div">
-                                Bienvenido Vendedor
-                            </Typography>
+                            <Grid container sx={{ alignItems: "center", justifyContent: 'center', backgroundColor: '#424444',ml:5, mt:5, width: 680, height: 80, borderRadius: 2 }} >
+                                <Typography sx={{ ml: 3, mt: 0, mb: 7, width: 500, height: 2 }} gutterBottom variant="h3" component="div">
+                                    Bienvenido Vendedor
+                                </Typography>
+                            </Grid>
                             <Grid container>
                                 <Grid container sx={{ borderRadius: 2, width: 680, height: 500, mt: 5, ml: 5, backgroundColor: '#424444' }}>
                                     <Grid sx={{ ml: 2 }}>

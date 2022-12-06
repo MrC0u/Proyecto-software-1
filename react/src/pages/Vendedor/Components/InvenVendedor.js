@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Grid, Card, CardContent, CardMedia, Typography} from '@mui/material';
+import { Grid, Card, CardContent, CardMedia, Typography } from '@mui/material';
 
 
 export const InventVendedor = () => {
@@ -50,10 +50,12 @@ export const InventVendedor = () => {
         <div>
             <Grid container justifyContent="space-between" alignItems="center" sx={{ borderRadius: 2, mt: 1, /*backgroundColor: 'black'*/ }}>
 
-                <Grid sx={{ ml: 5 }}>
-                    <Typography>
-                        <h1>Inventario</h1>
-                    </Typography>
+                <Grid sx={{ ml: 0 }}>
+                    <Grid container sx={{ alignItems: "center", justifyContent: 'center', backgroundColor: '#424444', ml: 0, mt: 3, width: 400, height: 70, borderRadius: 2 }} >
+                        <Typography variant="h4">
+                            Inventario
+                        </Typography>
+                    </Grid>
                 </Grid>
 
             </Grid>
