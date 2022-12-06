@@ -83,7 +83,7 @@ export const Admin = () => {
                 <Route path='/inventario' element={<InventAdmin idUser={params.id} />} />
                 <Route path='/addProducto' element={<ProductoForm idUser={params.id} />} />
                 <Route path='/venta' element={<VentaInventario idUser={params.id} />} />
-                <Route path='/compra' element={<CompraInventario idUser={params.id} />} />
+                <Route path='/addCompra' element={<CompraInventario idUser={params.id} />} />
                 <Route path='/redirect' element={<Redirect idUser={params.id} />} />
                 <Route path='/ModificarProducto' element={<ModificarInventarioAdm idUser={params.id} />} />
             </Routes>

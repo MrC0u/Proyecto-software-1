@@ -288,6 +288,7 @@ export const Vendedor = ({ }) => {
                 <Route path='/cambioClave' element={<CambioClave idUser={params.id} />} />
                 <Route path='/inventario' element={<InventVendedor idUser={params.id} />} />
                 <Route path='/venta' element={<VentaInventario idUser={params.id} />} />
+                <Route path='/compra' element={<CompraInventario idUser={params.id} />} />
                 <Route path='/redirect' element={<Redirect idUser={params.id} />} />
             </Routes>
         </Container>
