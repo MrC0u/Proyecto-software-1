@@ -9,11 +9,14 @@ import { Redirect } from "./Components/Redirect";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
+import { withStyles } from "@material-ui/core/styles";
 import {
     TextField, Autocomplete, Typography, createFilterOptions, Grid, Card,
     CardContent, CardMedia, CardActions, Button, TableContainer, Paper, Table, TableHead, TableCell, TableRow,
     Badge, ButtonGroup, TableBody
 } from '@mui/material'
+
+
 
 export const Vendedor = ({ }) => {
 
@@ -32,7 +35,12 @@ export const Vendedor = ({ }) => {
         usuario: ''
     })
 
-
+    const WhiteTextTypography = withStyles({
+        root: {
+          color: "#FFFFFF"
+        }
+      })(Typography);
+      
     const onLoad = async () => {
         const response = await fetch(`http://${process.env.REACT_APP_IP}:4000/vendedor`, {
             method: 'POST',
@@ -42,6 +50,7 @@ export const Vendedor = ({ }) => {
         const result = await response.json();
         setVendedor(result);
         setModificacion(result);
+        console.log(vendedor);
     }
 
     const handleClose = () => {
@@ -56,7 +65,7 @@ export const Vendedor = ({ }) => {
     const modificarVendedor = e => {
         //console.log(e.target.name, " - ", e.target.value)
         setModificacion({ ...modificacion, [e.target.name]: e.target.value })
-        //console.log(modificacion)
+        console.log(modificacion)
     }
 
     const enviarModificacion = async () => {
@@ -194,57 +203,61 @@ export const Vendedor = ({ }) => {
                                 <Grid container wrap="nowrap" justifyContent="flex-end" sx={{ borderRadius: 2, height: '40%', width: '30%', backgroundColor: '#f0f0f0' }}>
 
                                     <Grid container wrap="nowrap" direction="column" justifyContent="center" spacing={5} sx={{ height: '90%', width: '90%', mt: 3, ml: '35%' }}>
+                                        {vendedor.map((row) => (
+                                            <Grid>
+                                                <TextField
+                                                    required
+                                                    variant="filled"
+                                                    placeholder="Nombre"
+                                                    label="Nombre"
+                                                    defaultValue={row?.nombre}
+                                                    sx={{
+                                                        display: "block",
+                                                        margin: ".10rem 0",
+                                                    }}
+                                                    name="nombre"
+                                                    onChange={modificarVendedor}
+                                                    inputProps={{ style: { color: "black" } }}
+                                                    InputLabelProps={{ style: { color: "back" } }}
 
-                                        <TextField
-                                            required
-                                            variant="filled"
-                                            placeholder="Nombre"
-                                            label="Nombre"
-                                            defaultValue={modificacion?.nombre}
-                                            sx={{
-                                                display: "block",
-                                                margin: ".10rem 0",
-                                            }}
-                                            name="nombre"
-                                            onChange={modificarVendedor}
-                                            inputProps={{ style: { color: "black" } }}
-                                            InputLabelProps={{ style: { color: "back" } }}
+                                                />
 
-                                        />
+                                                <TextField
+                                                    required
+                                                    variant="filled"
+                                                    placeholder="Apellidos"
+                                                    label="Apellidos"
+                                                    defaultValue={row?.apellido}
+                                                    sx={{
+                                                        display: "block",
+                                                        margin: ".10rem 0",
+                                                    }}
+                                                    name="apellido"
+                                                    onChange={modificarVendedor}
+                                                    inputProps={{ style: { color: "black" } }}
+                                                    InputLabelProps={{ style: { color: "back" } }}
 
-                                        <TextField
-                                            required
-                                            variant="filled"
-                                            placeholder="Apellidos"
-                                            label="Apellidos"
-                                            defaultValue={modificacion?.apellido}
-                                            sx={{
-                                                display: "block",
-                                                margin: ".10rem 0",
-                                            }}
-                                            name="apellido"
-                                            onChange={modificarVendedor}
-                                            inputProps={{ style: { color: "black" } }}
-                                            InputLabelProps={{ style: { color: "back" } }}
+                                                />
 
-                                        />
+                                                <TextField
+                                                    required
+                                                    variant="filled"
+                                                    placeholder="Direccion"
+                                                    label="Direccion"
+                                                    defaultValue={row?.direccion}
+                                                    sx={{
+                                                        display: "block",
+                                                        margin: ".10rem 0",
+                                                    }}
+                                                    name="direccion"
+                                                    onChange={modificarVendedor}
+                                                    inputProps={{ style: { color: "black" } }}
+                                                    InputLabelProps={{ style: { color: "back" } }}
 
-                                        <TextField
-                                            required
-                                            variant="filled"
-                                            placeholder="Direccion"
-                                            label="Direccion"
-                                            defaultValue={modificacion?.direccion}
-                                            sx={{
-                                                display: "block",
-                                                margin: ".10rem 0",
-                                            }}
-                                            name="direccion"
-                                            onChange={modificarVendedor}
-                                            inputProps={{ style: { color: "black" } }}
-                                            InputLabelProps={{ style: { color: "back" } }}
+                                                />
+                                            </Grid>
+                                        ))}
 
-                                        />
 
                                         <Button
                                             onClick={enviarModificacion}

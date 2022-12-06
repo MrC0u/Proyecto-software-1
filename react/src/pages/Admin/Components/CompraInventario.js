@@ -45,6 +45,7 @@ function onlyUnique(value, index, self) {
     const [carro, setCarro] = useState([]);
     const [cantidad, setCantidad] = useState([]);
     const [precio, setPrecio] = useState([]);
+    const [id_carro, setId_carro] = useState([]);
     const [selectCantidad, setSelectCantidad] = useState([1, 1, 1]);
   
     const navigate = useNavigate();
@@ -151,11 +152,27 @@ function onlyUnique(value, index, self) {
         setSelectCantidad([...selectCantidad])
       }
     }
-  
+    
+    const LimpiarCarro = index => {
+    var name = carro[index]
+    setPrecio(precio.splice(index, 1))
+    setCantidad(cantidad.splice(index, 1))
+    setCarro(carro.splice(index, 1))
+    setId_carro(id_carro.splice(index,1))
+    selectCantidad[busqueda.indexOf(name)] = 1
+    setSelectCantidad([...selectCantidad])
+    setPrecio([...precio])
+    setCantidad([...cantidad])
+    setCarro([...carro])
+    setProductos([...productos])
+    setId_carro([...id_carro])
+  }
+
+
     // Enviar Compra
     const finalizarCompra = async (index) => {
       let compra = []
-      conmpra.push(["Id Empleado", parseInt(idUser), 0])
+      compra.push(["Id Empleado", parseInt(idUser), 0])
       if(carro.length == 0){
         alert("No hay productos en el carro")
       }
