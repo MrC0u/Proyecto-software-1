@@ -217,37 +217,41 @@ export const VentaInventario = ({idUser}) => {
   // Render
   return (
     <div>
-      {/* ---------------- Buscador ---------------- */}
-      <Autocomplete
-        freeSolo
-        id="search-input"
-        disableClearable
-        filterOptions={filterOptions}
-        onChange={(event, value) => {
-          handleChange(value)
-        }}
-        options={
-          ((productos.map(object => object.categoria)).concat(productos.map(object => object.nombre))).filter(onlyUnique)
-        }
-        sx={{ width: 700, mt: 4, ml: marginLeft }}
-        renderInput={(params) => (
-          <TextField
-            onChange={(event) => {
-              handleChange(event.target.value)
+          {/* ---------------- Buscador ---------------- */} 
+          <Autocomplete
+            freeSolo
+            id="search-input"
+            disableClearable
+            filterOptions={filterOptions}
+            onChange={(event, value) => {
+              handleChange(value)
             }}
-            {...params}
-            label="Buscar"
-            variant="standard"
-            InputProps={{
-              ...params.InputProps,
-              type: 'search',
-            }}
+            options={
+              ((productos.map(object => object.categoria)).concat(productos.map(object => object.nombre))).filter(onlyUnique)
+            }
+            sx={{ width:700, mt: 4, ml: marginLeft, backgroundColor: '#DFDFDF', borderRadius: 2}}
+            renderInput={(params) => (
+              <TextField
+                onChange={(event) => {
+                  handleChange(event.target.value)
+                }}
+                {...params}
+                label=" Buscar"
+                variant="standard"
+                InputProps={{
+                  ...params.InputProps,
+                  type: 'search',
+                }}
+              />
+            )}
           />
-        )}
-      />
-      <Grid container wrap="nowrap" direction="row" justifyContent="flex-start" alignItems="flex-start" spacing={0} columns={32} sx={{ maxHeight: 700, ml: marginLeft }}>
+      
+      
+      <Grid container wrap="nowrap" direction="row" justifyContent="flex-start" alignItems="flex-start" spacing={0} columns={32} sx={{ maxHeight: 700, ml: marginLeft}}>
         {/* ---------------- Productos ---------------- */}
-        <Grid container alignItems="center" justifyContent="flex-start" direction="row" sx={{ overflow: 'auto', borderRadius: 2, width: 1100, height: 600, mt: 5, backgroundColor: '#DFDFDF' }}>
+          
+        <Grid container  justifyContent="flex-start" direction="row" sx={{ overflow: 'auto', borderRadius: 2, width: 1100, height: 600, mt: 5, backgroundColor: '#DFDFDF' }}>
+
           {
             busqueda?.map(elemento => (
               <Card sx={{ maxWidth: 300, minWidth: 300, minHeight: 300, ml: 4, mr: 2, mt: 4, mb: 5 }}>
@@ -357,7 +361,7 @@ export const VentaInventario = ({idUser}) => {
         </Button>
 
         {/* ---------------- Precio Total ---------------- */}
-        <Card sx={{ width: 400, height: 100, mt: 2, ml: 5, backgroundColor: "#1c1c1c" }}>
+        <Card sx={{ width: 400, height: 100, mt: 2, ml: 5, backgroundColor: "#C44536" }}>
           <CardContent >
             <Typography variant="h4" color="white" >
               Total: $ {numberWithCommas(precio.reduce((previousValue, currentValue) => previousValue + currentValue, 0))}

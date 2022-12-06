@@ -153,9 +153,34 @@ function onlyUnique(value, index, self) {
     }
   
     // Enviar Compra
-    const finalizarCompra = index => {
+    const finalizarCompra = async (index) => {
+      let compra = []
+      conmpra.push(["Id Empleado", parseInt(idUser), 0])
+      if(carro.length == 0){
+        alert("No hay productos en el carro")
+      }
+      else{
+        for (var i = 0; i < carro.length; i++) {
+          compra.push([carro[i], cantidad[i], id_carro[i]])
+        }
+        compra = JSON.stringify(compra)
+      }
       alert('En proceso: Compra Finalizada')
+      try{
+        const res = await fetch(`http://${process.env.REACT_APP_IP}:4000/compra`, {
+          method: 'POST',
+          body: compra,
+          headers: {"content-type": "application/json"},
+      });
+      } catch (error) {
+        console.log(error)
+      }
+      for (let i in carro){
+        LimpiarCarro()
+      }
+      navigate('./../redirect');
     }
+
   
     const filterOptions = createFilterOptions({
       limit: 5,
@@ -181,7 +206,7 @@ function onlyUnique(value, index, self) {
           options={
             ((productos.map(object => object.categoria)).concat(productos.map(object => object.nombre))).filter(onlyUnique)
           }
-          sx={{ width: 700, mt: 4, ml: marginLeft }}
+          sx={{ width: 700, mt: 4, ml: marginLeft, backgroundColor: '#DFDFDF', borderRadius: 2 }}
           renderInput={(params) => (
             <TextField
               onChange={(event) => {
