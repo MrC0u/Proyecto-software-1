@@ -48,6 +48,7 @@ router.delete('/deleteProducto/:id', deleteProducto);
 
 router.get('/mostSold',getMasVendido);
 
+router.post('/addCompra', addCompra)
 
 
 module.exports = router;

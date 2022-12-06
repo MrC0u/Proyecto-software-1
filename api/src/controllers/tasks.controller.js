@@ -246,6 +246,56 @@ const deleteProducto = async (req, res) => {
 
     return res.sendStatus(204);
 }
+const addCompra = async (req, res) => {
+
+
+    var name,cantidad,id_producto,stock,aux;
+    let empleado = req.body[0][1]
+
+    var result = await pool.query('SELECT Id FROM Compras ORDER BY Id DESC LIMIT 1')
+    var id = parseInt(result.rows[0].id) + 1
+
+    console.log('\n===================')
+    console.log('Empleado: ', empleado)
+    console.log('Id_compra: ', id)
+    for (var i in req.body) {
+        if(i == 0){
+            continue;
+        }
+        name = req.body[i][0]
+        cantidad = req.body[i][1]
+        id_producto = req.body[i][2]
+
+        stock = await pool.query("SELECT stock FROM inventario where id = $1;",[id_producto]);
+        stock = parseInt(stock.rows[0].stock)
+
+        aux = stock + cantidad
+
+        console.log('Iteracion :', i, '   - Nombre: ' , name , '  - Cantidad:', cantidad, '  - ID_Prod:', id_producto,'  - Stock:', stock)
+
+        try {
+            result = await pool.query("INSERT INTO Compras(Id, Id_Producto, Nombre, Cantidad, Id_Empleado) VALUES ($1, $2, $3, $4, $5);", [
+                id,
+                id_producto,
+                name,
+                cantidad,
+                empleado
+            ])
+
+            result = await pool.query('UPDATE inventario SET stock = $1 WHERE id = $2', [aux, id_producto]);
+    
+
+
+        } catch (error) {
+            next(error)
+        }
+        
+        
+    }
+    res.json({"success": true})
+    //console.log(req.body)
+}
+
 
 module.exports = {
     getVendedores,
@@ -264,5 +314,6 @@ module.exports = {
     modifyProduct,
     addVenta,
     getMasVendido,
-    getVendedor
+    getVendedor,
+    addCompra
 }

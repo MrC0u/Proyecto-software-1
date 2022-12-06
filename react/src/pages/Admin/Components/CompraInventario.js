@@ -184,7 +184,7 @@ function onlyUnique(value, index, self) {
       }
       alert('En proceso: Compra Finalizada')
       try{
-        const res = await fetch(`http://${process.env.REACT_APP_IP}:4000/compra`, {
+        const res = await fetch(`http://${process.env.REACT_APP_IP}:4000/addCompra`, {
           method: 'POST',
           body: compra,
           headers: {"content-type": "application/json"},
