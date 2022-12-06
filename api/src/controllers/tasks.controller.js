@@ -148,7 +148,6 @@ const getProductos = async (req, res) => {
 
 const getProducto = async (req, res) => {
 
-    console.log(req.body)
     const result = await pool.query("SELECT * FROM inventario where id = $1 limit 1", [req.body.id])
     console.log(result.rows)
     res.json(result.rows)
@@ -170,6 +169,13 @@ const addImages = async (req, res) => {
 
 const getMasVendido = async (req, res) => {
     const result = await pool.query('select nombre, sum(cantidad) from ventas group by nombre having sum(cantidad) = ( select sum(cantidad) from ventas group by nombre order by sum(cantidad) desc limit 1 )');
+    console.log(result.rows)
+    res.json(result.rows)
+}
+
+const getVendedor = async (req, res) => {
+    console.log(req.body)
+    const result = await pool.query('select id,usuario,nombre,apellido,direccion from empleados where id = $1',[req.body.id]);
     console.log(result.rows)
     res.json(result.rows)
 }
@@ -257,5 +263,6 @@ module.exports = {
     deleteProducto,
     modifyProduct,
     addVenta,
-    getMasVendido
+    getMasVendido,
+    getVendedor
 }

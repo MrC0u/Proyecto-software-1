@@ -45,10 +45,6 @@ export const InventAdmin = ({idUser}) => {
     setOpen((prev) => !prev)
   }
 
-  useEffect(() => {
-    loadProductos();
-  }, [])
-
   const BorrarProducto = async (data) => {
 
     const response = await fetch(`http://${process.env.REACT_APP_IP}:4000/deleteProducto/${data}`, {
@@ -77,6 +73,10 @@ export const InventAdmin = ({idUser}) => {
     setProducto(value)
     setModificar(true)
   }
+
+  useEffect(() => {
+    loadProductos();
+  }, [])
 
   return (
     <div>

@@ -57,7 +57,7 @@ export const Admin = () => {
                                 mostSold.map(data => (
                                     <CardContent>
                                         <Typography sx={{ ml: 0, mt: 0, width: 500, height: 2 }} gutterBottom variant="h7" component="div">
-                                            {data.nombre + " "}
+                                            {data.sum==0?"No Existe":(data.nombre + " ")}
                                         </Typography>
                                     </CardContent>
                                 ))
