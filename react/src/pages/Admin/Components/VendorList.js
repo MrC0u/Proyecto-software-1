@@ -77,9 +77,7 @@ export default function VendorList({ idUser }) {
                 <Typography>
                   Usuario: {vendedor.usuario}
                 </Typography>
-                <Typography>
-                  Clave: {vendedor.clave}
-                </Typography>
+
               </div>
               <div>
                 <Button variant='contained' color='error' onClick={() => handleDelete(vendedor.id)}>

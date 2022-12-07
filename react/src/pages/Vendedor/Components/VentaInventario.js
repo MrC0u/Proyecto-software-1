@@ -109,7 +109,7 @@ export const VentaInventario = ({idUser}) => {
       } else {
         // Existe en el Carro
         cantidad[index] += cantidadCompra
-        setCantidad([...cantidad])
+        setCantidad([...cantidad])  
         precio[index] += (cantidadCompra) * (producto.precioventa)
         setPrecio([...precio])
       }

@@ -10,6 +10,7 @@ INSERT INTO inventario(Id, Nombre, PrecioVenta, Categoria, Distribuidor, Stock, 
 INSERT INTO inventario(Id, Nombre, PrecioVenta, Categoria, Distribuidor, Stock, PrecioCompra, Detalle, Imagen) VALUES (default, 'Escudo', 1900, 'Cervezas', 'CCU', 10, 500, 'cerveza excelente','https://cdnx.jumpseller.com/mgdrinks/image/10544337/thumb/540/540?1650570633');
 INSERT INTO inventario(Id, Nombre, PrecioVenta, Categoria, Distribuidor, Stock, PrecioCompra, Detalle, Imagen) VALUES (default, 'Papas Lays', 1000, 'Snacks', 'EverCrisp', 15, 700, 'comida' ,'https://cugat.cl/wp-content/uploads/2021/04/7802000014703-2.jpg');
 INSERT INTO inventario(Id, Nombre, PrecioVenta, Categoria, Distribuidor, Stock, PrecioCompra, Detalle, Imagen) VALUES (default, 'Ramitas', 1000, 'Snacks', 'EverCrisp', 15, 1200, 'comida','https://santaisabel.vtexassets.com/arquivos/ids/171980/1841892-02_87070.jpg?v=637569545859600000');
+INSERT INTO inventario(Id, Nombre, PrecioVenta, Categoria, Distribuidor, Stock, PrecioCompra, Detalle, Imagen) VALUES (default, 'Ramitas Queso', 1000, 'Snacks', 'EverCrisp', 30, 1200, 'comida','https://santaisabel.vtexassets.com/arquivos/ids/171982/1841891-02_87071.jpg?v=637569546032270000');
 INSERT INTO inventario(Id, Nombre, PrecioVenta, Categoria, Distribuidor, Stock, PrecioCompra, Detalle, Imagen) VALUES (default, 'Cristal', 1900, 'Cervezas', 'CCU', 5, 400, 'cerveza','https://mercadosaavedra.cl/wp-content/uploads/2021/02/CRISTAL.png');
 INSERT INTO inventario(Id, Nombre, PrecioVenta, Categoria, Distribuidor, Stock, PrecioCompra, Detalle, Imagen) VALUES (default, 'Kunstmann', 1900, 'Cervezas', 'CCU', 15, 800, 'cerveza excelente','https://tofuu.getjusto.com/orioneat-prod/8zEhKCZM55B73me2A-kunstmann-lat.png');
 INSERT INTO inventario(Id, Nombre, PrecioVenta, Categoria, Distribuidor, Stock, PrecioCompra, Detalle, Imagen) VALUES (default, 'Becker', 1900, 'Cervezas', 'CCU', 10, 500, 'cerveza excelente','https://santaisabel.vtexassets.com/arquivos/ids/191612/Pack-6-un-Cerveza-lata-45%C2%B0-473-cc.jpg?v=637831200653400000');
@@ -17,6 +18,6 @@ INSERT INTO inventario(Id, Nombre, PrecioVenta, Categoria, Distribuidor, Stock, 
 CREATE TABLE Ventas(Id SERIAL, Id_Producto int,Nombre VARCHAR(200),Cantidad int, Id_Empleado int);
 INSERT INTO Ventas(Id, Id_Producto, Nombre, Cantidad, Id_Empleado) VALUES (default, 1, 'Coca-Cola', 0, 1);
 
-CREATE TABLE Compras(Id SERIAL, Id_Producto int,Nombre VARCHAR(200),Cantidad int, Id_Proveedor int);
-INSERT INTO Ventas(Id, Id_Producto, Nombre, Cantidad, Id_Proveedor) VALUES (default, 1, 'Coca-Cola', 0, 1);
+CREATE TABLE Compras(Id SERIAL, Id_Producto int,Nombre VARCHAR(200),Cantidad int, Id_Empleado int);
+INSERT INTO Compras(Id, Id_Producto, Nombre, Cantidad, Id_Empleado) VALUES (default, 1, 'Coca-Cola', 0, 1);
 

@@ -5,6 +5,7 @@ import Navbar from './Components/Navbar';
 import { CambioClave } from './Components/CambioClave';
 import { InventVendedor } from "./Components/InvenVendedor";
 import { VentaInventario } from "./Components/VentaInventario";
+import { CompraInventario } from "./Components/CompraInventario";
 import { Redirect } from "./Components/Redirect";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';

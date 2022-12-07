@@ -180,6 +180,24 @@ const getVendedor = async (req, res) => {
     res.json(result.rows)
 }
 
+
+
+
+const deleteProducto = async (req, res) => {
+    const { id } = req.params;
+    console.log("aaaa ", req.params)
+    const result = await pool.query('DELETE FROM inventario where id = $1', [id])
+
+    if (result.rowCount === 0)
+        return res.status(404).json({
+            message: "Producto not found"
+        });
+
+
+    return res.sendStatus(204);
+}
+
+
 const addVenta = async (req, res) => {
 
 
@@ -221,7 +239,7 @@ const addVenta = async (req, res) => {
 
 
         } catch (error) {
-            next(error)
+            console.log(error)
         }
         
         
@@ -231,28 +249,13 @@ const addVenta = async (req, res) => {
 }
 
 
-
-
-const deleteProducto = async (req, res) => {
-    const { id } = req.params;
-    console.log("aaaa ", req.params)
-    const result = await pool.query('DELETE FROM inventario where id = $1', [id])
-
-    if (result.rowCount === 0)
-        return res.status(404).json({
-            message: "Producto not found"
-        });
-
-
-    return res.sendStatus(204);
-}
 const addCompra = async (req, res) => {
 
 
     var name,cantidad,id_producto,stock,aux;
     let empleado = req.body[0][1]
 
-    var result = await pool.query('SELECT Id FROM Compras ORDER BY Id DESC LIMIT 1')
+    var result = await pool.query('SELECT Id FROM Ventas ORDER BY Id DESC LIMIT 1')
     var id = parseInt(result.rows[0].id) + 1
 
     console.log('\n===================')
@@ -267,6 +270,7 @@ const addCompra = async (req, res) => {
         id_producto = req.body[i][2]
 
         stock = await pool.query("SELECT stock FROM inventario where id = $1;",[id_producto]);
+        console.log(stock.rows)
         stock = parseInt(stock.rows[0].stock)
 
         aux = stock + cantidad
@@ -287,7 +291,7 @@ const addCompra = async (req, res) => {
 
 
         } catch (error) {
-            next(error)
+            console.log(error)
         }
         
         

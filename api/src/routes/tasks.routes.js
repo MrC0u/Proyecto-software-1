@@ -2,7 +2,7 @@ const { Router } = require('express');
 const { getVendedores, create, deleteVendedor, login, userLevel, getId, 
     cambioClave, createProducto, getProductos, getCategorias, addImages, 
     deleteProducto, getProducto, modifyProduct, addVenta, getMasVendido,
-    getVendedor } = require('../controllers/tasks.controller');
+    getVendedor, addCompra } = require('../controllers/tasks.controller');
 
 const router = Router();
 
