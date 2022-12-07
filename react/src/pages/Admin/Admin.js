@@ -29,6 +29,7 @@ export const Admin = () => {
         const response = await fetch(`http://${process.env.REACT_APP_IP}:4000/mostSold`);
         const result = await response.json();
         setMostSold(result);
+        setMostSold([...result]);
     }
 
     useEffect(() => {
@@ -50,26 +51,34 @@ export const Admin = () => {
                     <Grid container sx={{ borderRadius: 2, width: 500, height: 200, mt: 5, ml: 5, backgroundColor: '#424444' }}>
                         <Grid container sx={{ borderRadius: 3, backgroundColor: '#424444' }}>
                             <Typography sx={{ borderRadius: 2, ml: 2, mt: 0, height: 5 }} variant="h4">
-                                Producto Mas vendido:
+                                Productos Mas vendido:
                             </Typography>
                         </Grid>
-                        <Grid wrap="wrap" container >
-                            {
-                                mostSold.map(data => (
-                                    <CardContent>
-                                        <Typography sx={{ ml: 0, mt: 0, width: 500, height: 2 }} gutterBottom variant="h7" component="div">
-                                            {data.sum == 0 ? "No Existe" : (data.nombre + " ")}
-                                        </Typography>
-                                    </CardContent>
-                                ))
-
-                            }
-                            <Grid container sx={{ borderRadius: 3, backgroundColor: '#424445' }}>
-                                <Typography sx={{ ml: 2, mt: 2, width: 500 }} gutterBottom variant="h5" component="div">
-                                    {"Cantidad: " + mostSold[0]?.sum + " "}
-                                </Typography>
-                            </Grid>
-                        </Grid>
+                            <TableContainer sx={{mt:5}} component={Paper}>
+                                <Table sx={{ width: 500}} aria-label="custom pagination table">
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell>Producto</TableCell>
+                                            <TableCell align="right">Cantidad</TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {mostSold.map((row, index) => (
+                                        <TableRow
+                                            hover
+                                            key={row}
+                                            sx={{ color: 'secondary', '&:last-child td, &:last-child th': { border: 0 } }}
+                                        >
+                                            <TableCell component="th" scope="row">
+                                            {row.nombre}
+                                            </TableCell>
+                                            <TableCell align="right">{row.sum}</TableCell>
+                                            {/*<TableCell align="right">{numberWithCommas(precio[carro.indexOf(row)])}</TableCell>*/}
+                                        </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
                     </Grid>
                 </div>
 
