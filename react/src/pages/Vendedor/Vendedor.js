@@ -63,12 +63,12 @@ export const Vendedor = ({ }) => {
     }
 
     const enviarModificacion = async () => {
-        // const res = await fetch(`http://${process.env.REACT_APP_IP}:4000/modificarProducto`, {
-        //     method: 'POST',
-        //     body: JSON.stringify(producto),
-        //     headers: { "Content-Type": "application/json" },
-        // });
-        // const data = await res.json();
+        const res = await fetch(`http://${process.env.REACT_APP_IP}:4000/modificarVendedor`, {
+            method: 'POST',
+            body: JSON.stringify(modificacion),
+            headers: { "Content-Type": "application/json" },
+        });
+        const data = await res.json();
         handleClose();
         onLoad();
     }
@@ -86,7 +86,7 @@ export const Vendedor = ({ }) => {
                 <Route path='/' element={
                     <div>
                         <Grid sx={{ ml: 10 }}>
-                            <Grid container sx={{ alignItems: "center", justifyContent: 'center', backgroundColor: '#424444',ml:5, mt:5, width: 680, height: 80, borderRadius: 2 }} >
+                            <Grid container sx={{ alignItems: "center", justifyContent: 'center', backgroundColor: '#424444', ml: 5, mt: 5, width: 680, height: 80, borderRadius: 2 }} >
                                 <Typography sx={{ ml: 3, mt: 0, mb: 7, width: 500, height: 2 }} gutterBottom variant="h3" component="div">
                                     Bienvenido Vendedor
                                 </Typography>

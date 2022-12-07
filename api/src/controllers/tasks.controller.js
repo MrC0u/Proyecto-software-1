@@ -137,6 +137,24 @@ const modifyProduct = async (req, res, next) => {
     }
 }
 
+
+const modificarVendedor = async (req, res, next) => {
+    try {
+        const { id, nombre, apellido, direccion, usuario} = req.body
+        console.log(req.body)
+        const result = await pool.query("UPDATE empleados SET nombre = $1, apellido = $2, direccion = $3 WHERE id = $4", [
+            nombre,
+            apellido,
+            direccion,
+            id
+        ])
+        console.log(result);
+        res.json(result.rows);
+    } catch (error) {
+        next(error)
+    }
+}
+
 const getProductos = async (req, res) => {
 
 
@@ -319,5 +337,6 @@ module.exports = {
     addVenta,
     getMasVendido,
     getVendedor,
-    addCompra
+    addCompra,
+    modificarVendedor
 }
